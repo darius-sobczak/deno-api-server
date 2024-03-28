@@ -1,6 +1,7 @@
-import { BadRequestError, IContext } from "../deps.ts";
+import { BadRequestError } from "../../../errors/mod.ts";
 import { Form, multiParser } from "https://deno.land/x/multiparser@v0.114.0/mod.ts";
 
+import type { IContext } from "../../../definition/types.ts";
 export type { FormFile, Form } from "https://deno.land/x/multiparser@v0.114.0/mod.ts";
 
 interface IConfig {
