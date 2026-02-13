@@ -2,7 +2,6 @@
 
 Plugin for `deno-api-server` to log all routes that added to the api (only on start)
 
-
 ## Integration
 
 ```ts

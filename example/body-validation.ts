@@ -2,14 +2,14 @@
  * example to integrate Third party library to validate json body
  * @see https://deno.land/x/validasaur@v0.15.0
  */
-import { Api, BadRequestError, EMethod, IContext, Route } from "../mod.ts";
+import { Api, BadRequestError, EMethod, IContext, Route } from '../mod.ts';
 
 // create an api instance
 const api = new Api({ port: 8080 });
 
 // import some inbuild routes and pipes
-import statusRoute from "../src/presets/routes/status.ts";
-import jsonBodyPipe from "../src/presets/pipes/body/json-body.pipe.ts";
+import statusRoute from '../src/presets/routes/status.ts';
+import jsonBodyPipe from '../src/presets/pipes/body/json-body.pipe.ts';
 
 // add basic status route
 api.addRoute(statusRoute);
@@ -23,7 +23,7 @@ import {
   required,
   validate,
   ValidationRules,
-} from "https://deno.land/x/validasaur/mod.ts";
+} from 'https://deno.land/x/validasaur/mod.ts';
 
 const schema: ValidationRules = {
   name: required,
@@ -37,7 +37,7 @@ const schema: ValidationRules = {
  */
 function bodyValidationPipe(schema: ValidationRules) {
   return async ({ state, response }: IContext) => {
-    const body = state.get("body"); // will be set by jsonBodyPipe
+    const body = state.get('body'); // will be set by jsonBodyPipe
 
     const [passes, errors] = await validate(body, schema);
 
@@ -49,7 +49,7 @@ function bodyValidationPipe(schema: ValidationRules) {
       };
 
       // throw bad request error to break the pipes and show json data with error information
-      throw new BadRequestError("Invalid model", 400);
+      throw new BadRequestError('Invalid model', 400);
     }
   };
 }
@@ -57,15 +57,15 @@ function bodyValidationPipe(schema: ValidationRules) {
 ////// add example route
 api
   .addRoute(
-    new Route(EMethod.POST, "/")
+    new Route(EMethod.POST, '/')
       // first step have to transform request data to json body by using internal pipe
       .addPipe(jsonBodyPipe)
       // add your validation pipe
       .addPipe(bodyValidationPipe(schema))
       .addPipe(({ response, state }) => {
         response.body = {
-          answer: "all valid",
-          input: state.get("body"),
+          answer: 'all valid',
+          input: state.get('body'),
         };
       }),
   );

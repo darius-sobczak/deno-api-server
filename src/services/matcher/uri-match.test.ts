@@ -1,11 +1,10 @@
-import { assertEquals, assertNotEquals, assertThrows } from "../../dev_deps.ts";
-import { UriMatch } from "./uri-match.ts";
-import { EPatternTypes } from "../../definition/pattern-map.ts";
+import { assertEquals, assertNotEquals } from '../../dev_deps.ts';
+import { UriMatch } from './uri-match.ts';
 
-const host = "http://localhost";
-Deno.test("UriMatch for basic match", () => {
-  const url = new URL("/test", host);
-  const matcher = new UriMatch("/test");
+const host = 'http://localhost';
+Deno.test('UriMatch for basic match', () => {
+  const url = new URL('/test', host);
+  const matcher = new UriMatch('/test');
 
   assertNotEquals(
     matcher.getMatch(url),
@@ -15,11 +14,11 @@ Deno.test("UriMatch for basic match", () => {
   const match = matcher.getMatch(url);
   assertEquals(
     match?.url.pathname,
-    "/test",
+    '/test',
   );
 
   assertEquals(
     match?.uri,
-    "/test",
+    '/test',
   );
 });

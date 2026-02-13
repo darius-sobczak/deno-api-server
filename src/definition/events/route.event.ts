@@ -1,4 +1,4 @@
-import { IRoute } from "../types.ts";
+import { IRoute } from '../types.ts';
 
 export default class RouteEvent extends Event {
   public route: IRoute;

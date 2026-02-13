@@ -1,4 +1,4 @@
-import { Api } from "../services/api.ts";
+import { Api } from '../services/api.ts';
 import {
   IContext,
   IInjections,
@@ -6,14 +6,14 @@ import {
   IResponse,
   IRoute,
   IServerConfig,
-} from "../definition/types.ts";
-import { mockResponse } from "./mock-response.ts";
-import { RequestError } from "../errors/request.error.ts";
-import { mockRequest } from "../../dev_mod.ts";
-import RequestEvent from "../definition/events/request.event.ts";
-import {EEvent} from "../definition/event.ts";
-import RouteEvent from "../definition/events/route.event.ts";
-import ErrorEvent from "../definition/events/error.event.ts";
+} from '../definition/types.ts';
+import { mockResponse } from './mock-response.ts';
+import { RequestError } from '../errors/request.error.ts';
+import { mockRequest } from '../../dev_mod.ts';
+import RequestEvent from '../definition/events/request.event.ts';
+import { EEvent } from '../definition/event.ts';
+import RouteEvent from '../definition/events/route.event.ts';
+import ErrorEvent from '../definition/events/error.event.ts';
 
 interface IErrorContext {
   url: URL;
@@ -22,7 +22,7 @@ interface IErrorContext {
 }
 
 export class MockApi extends Api {
-  static readonly HOST = "http://localhost";
+  static readonly HOST = 'http://localhost';
   public lastRoute?: IRoute | null;
   public lastContext?: IContext | IErrorContext | null;
   public lastError?: string | Error;
@@ -39,12 +39,12 @@ export class MockApi extends Api {
   }
 
   /**
-     * shorthand function
-     *
-     * @param method
-     * @param uri
-     * @param data
-     */
+   * shorthand function
+   *
+   * @param method
+   * @param uri
+   * @param data
+   */
   public sendByArguments(
     method: string,
     uri: string | URL,
@@ -56,11 +56,11 @@ export class MockApi extends Api {
   }
 
   /**
-     * request send method
-     *
-     * @param request
-     * @param url
-     */
+   * request send method
+   *
+   * @param request
+   * @param url
+   */
   public async sendByRequest(request: IRequest, url?: URL) {
     url = url instanceof URL ? url : new URL(request.url, MockApi.HOST);
 
@@ -70,7 +70,7 @@ export class MockApi extends Api {
 
     try {
       dispatchEvent(
-          new RequestEvent(EEvent.BEFORE_REQUEST, request, response),
+        new RequestEvent(EEvent.BEFORE_REQUEST, request, response),
       );
 
       if (route) {
@@ -80,13 +80,12 @@ export class MockApi extends Api {
         dispatchEvent(new RouteEvent(EEvent.BEFORE_ROUTE, route));
         this.lastContext = await route.execute(url, request, response);
 
-
         route.di = currentInjections;
       } else {
         dispatchEvent(
-            new RequestEvent(EEvent.ROUTE_NOT_FOUND, request, response),
+          new RequestEvent(EEvent.ROUTE_NOT_FOUND, request, response),
         );
-        throw new RequestError("Not found", 404);
+        throw new RequestError('Not found', 404);
       }
     } catch (e) {
       this.handleError(response, e);
@@ -98,7 +97,7 @@ export class MockApi extends Api {
       };
 
       dispatchEvent(
-          new ErrorEvent(EEvent.ROUTE_ERROR, e, { response, request }),
+        new ErrorEvent(EEvent.ROUTE_ERROR, e, { response, request }),
       );
     }
   }

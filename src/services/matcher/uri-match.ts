@@ -1,4 +1,4 @@
-import { IMatcher, IMatching } from "../../definition/types.ts";
+import { IMatcher, IMatching } from '../../definition/types.ts';
 
 export class UriMatch implements IMatcher {
   public readonly uri: string;

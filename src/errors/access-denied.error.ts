@@ -1,8 +1,8 @@
-import { RequestError } from "./request.error.ts";
+import { RequestError } from './request.error.ts';
 
 export class AccessDeniedError extends RequestError {
   constructor(
-    message: string = "Access denied",
+    message: string = 'Access denied',
     status: number = 403,
     prevent?: Error,
   ) {

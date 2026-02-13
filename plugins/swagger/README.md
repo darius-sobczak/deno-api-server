@@ -12,19 +12,19 @@ Status `WIP`
 const api = new Api({}); // deno api server
 // add routes or other stuff
 
-const route = new Route(EMethod.GET, "/test")
+const route = new Route(EMethod.GET, '/test')
   // add swagger route details as prop
-  .prop("swagger", {
-    tags: ["bunny"],
-    summary: "you get some data",
+  .prop('swagger', {
+    tags: ['bunny'],
+    summary: 'you get some data',
   });
 
 // init swagger plugin
 await swaggerPlugin(api, {
   info: {
-    title: "my api",
-    description: "my api for your",
-    version: "0.0.0",
+    title: 'my api',
+    description: 'my api for your',
+    version: '0.0.0',
   },
 });
 

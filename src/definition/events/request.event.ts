@@ -1,4 +1,4 @@
-import { IRequest, IResponse } from "../types.ts";
+import { IRequest, IResponse } from '../types.ts';
 
 export default class RequestEvent extends Event {
   readonly request: IRequest;

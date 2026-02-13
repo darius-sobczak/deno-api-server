@@ -1,0 +1,57 @@
+{
+  "compilerOptions": {
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "lib": ["deno.window"],
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strict": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "useUnknownInCatchVariables": true
+  },
+  "imports": {
+    "@std/assert": "https://deno.land/std@0.224.0/testing/asserts.ts",
+    "@std/http": "https://deno.land/std@0.224.0/http/server.ts",
+    "@std/path": "https://deno.land/std@0.224.0/path/mod.ts"
+  },
+  "lint": {
+    "include": ["src/", "plugins/", "example/", "mod.ts"],
+    "exclude": ["node_modules/", "dist/"],
+    "rules": {
+      "tags": ["recommended"],
+      "include": [
+        "ban-ts-comment",
+        "ban-types",
+        "no-explicit-any",
+        "no-prototype-builtins",
+        "no-unused-vars",
+        "prefer-const",
+        "require-await"
+      ]
+    }
+  },
+  "tasks": {
+    "test": "deno test --allow-all --no-check",
+    "test:watch": "deno test --allow-all --no-check --watch",
+    "lint": "deno lint",
+    "fmt": "deno fmt",
+    "check": "deno check mod.ts"
+  },
+  "fmt": {
+    "useTabs": false,
+    "lineWidth": 100,
+    "indentWidth": 2,
+    "semiColons": true,
+    "singleQuote": true,
+    "proseWrap": "preserve",
+    "include": ["src/", "plugins/", "example/", "mod.ts"],
+    "exclude": ["node_modules/", "dist/"]
+  }
+}

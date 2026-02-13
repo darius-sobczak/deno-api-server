@@ -1,4 +1,4 @@
-import { Api, EMethod, Route, IPipe } from "../../mod.ts";
+import { Api, EMethod, IPipe, Route } from '../../mod.ts';
 
 interface IStatusRouteConfig {
   uri?: string;
@@ -10,13 +10,13 @@ interface IStatusRouteConfig {
  * info only one method will be used, handler or body, json body are default
  */
 export function createStatusRoute(config: IStatusRouteConfig = {}) {
-  const route = new Route(EMethod.GET, config?.uri || "/status");
+  const route = new Route(EMethod.GET, config?.uri || '/status');
 
-  if (typeof config?.handler === "function") {
+  if (typeof config?.handler === 'function') {
     route.addPipe(config.handler);
   } else {
     route.addPipe(({ response }) => {
-      response.body = config?.body || { status: "OK" };
+      response.body = config?.body || { status: 'OK' };
     });
   }
 
@@ -30,13 +30,13 @@ interface IConfig {
 
 /**
  * default status route
- **/
+ */
 export default function plugin(api: Api, config: IConfig = {}) {
   const statusConfig = {
-    uri: "/status",
+    uri: '/status',
     body: Object.assign({ status: 'OK' }, config.body),
     handler: config.handler,
-  }
+  };
 
   api.addRoute(createStatusRoute(statusConfig));
 }

@@ -2,7 +2,6 @@
 
 Plugin for `deno-api-server` to create a status endpoint quickly
 
-
 ## Integra
 
 ```ts

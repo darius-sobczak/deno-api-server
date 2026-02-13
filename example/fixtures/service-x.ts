@@ -1,9 +1,9 @@
 export function serviceX() {
-  return "x";
+  return 'x';
 }
 export function serviceY() {
-  return "y";
+  return 'y';
 }
 export default function serviceDefault() {
-  return "default";
+  return 'default';
 }

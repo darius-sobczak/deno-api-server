@@ -1,4 +1,4 @@
-import { BreakPipe, IContext, IPipe } from "../../../definition/types.ts";
+import { BreakPipe, IContext, IPipe } from '../../../definition/types.ts';
 
 export default function redirectPipe(
   url: string | URL,
@@ -6,10 +6,10 @@ export default function redirectPipe(
   referrer?: string | URL,
 ): IPipe {
   return ({ response }: IContext) => {
-    response.headers.set("Location", `${url}`);
+    response.headers.set('Location', `${url}`);
 
     if (referrer) {
-      response.headers.set("Referrer", `${referrer}`);
+      response.headers.set('Referrer', `${referrer}`);
     }
 
     response.status = status;

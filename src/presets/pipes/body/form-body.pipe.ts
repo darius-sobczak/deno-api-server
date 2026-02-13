@@ -1,12 +1,12 @@
-import { BadRequestError } from "../../../errors/mod.ts";
-import { Form, multiParser } from "https://deno.land/x/multiparser@0.114.0/mod.ts";
+import { BadRequestError } from '../../../errors/mod.ts';
+import { Form, multiParser } from 'https://deno.land/x/multiparser@0.114.0/mod.ts';
 
-import type { IContext } from "../../../definition/types.ts";
-export type { FormFile } from "https://deno.land/x/multiparser@0.114.0/mod.ts";
+import type { IContext } from '../../../definition/types.ts';
+export type { FormFile } from 'https://deno.land/x/multiparser@0.114.0/mod.ts';
 
 interface IConfig {
-    stateKey?: string
-    errorMessage?: string
+  stateKey?: string;
+  errorMessage?: string;
 }
 
 export const STATE_KEY = 'body';
@@ -18,13 +18,13 @@ export const STATE_KEY = 'body';
  *  .addPipe(ctx => ctx.state.get(STATE_KEY))
  */
 export default function formBodyPipe(config: IConfig) {
-    return async (ctx: IContext) => {
-        const formData = await multiParser(ctx.request) as Form;
-        if (!formData) {
-            throw new BadRequestError(
-                config.errorMessage ?? 'Invalid form data'
-            );
-        }
-        ctx.state.set(config.stateKey ?? STATE_KEY, formData);
+  return async (ctx: IContext) => {
+    const formData = await multiParser(ctx.request) as Form;
+    if (!formData) {
+      throw new BadRequestError(
+        config.errorMessage ?? 'Invalid form data',
+      );
     }
+    ctx.state.set(config.stateKey ?? STATE_KEY, formData);
+  };
 }

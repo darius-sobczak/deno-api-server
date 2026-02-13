@@ -1,18 +1,25 @@
-export * from "https://deno.land/std@0.171.0/testing/asserts.ts";
-import { assertEquals } from "https://deno.land/std@0.171.0/testing/asserts.ts";
+export * from '@std/assert';
+import { assertEquals } from '@std/assert';
 
 /**
  * check if function called n times
  */
-export function assertCalledCount(mockedFn: any, count: number) {
+export function assertCalledCount(
+  mockedFn: { mock: { calls: { length: number } } },
+  count: number,
+) {
   assertEquals(mockedFn.mock.calls.length, count);
 }
 
 /**
  * check if called with arguments
  */
-export function assertCalledWith(mockedFn: any, calledAt: number, params: unknown[]) {
-  const args: unknown[] = mockedFn.mock.calls.at(calledAt);
+export function assertCalledWith(
+  mockedFn: { mock: { calls: { at: (index: number) => unknown[] } } },
+  calledAt: number,
+  params: unknown[],
+) {
+  const args = mockedFn.mock.calls.at(calledAt);
   assertEquals(Array.isArray(args), true, `Method not called on index ${calledAt}`);
   assertEquals(args, params);
 }
@@ -20,8 +27,13 @@ export function assertCalledWith(mockedFn: any, calledAt: number, params: unknow
 /**
  * check if called with value in argument
  */
-export function assertCalledWithAt(mockedFn: any, calledAt: number, paramIndex: number, value: unknown) {
-  const args: unknown[] = mockedFn.mock.calls.at(calledAt);
+export function assertCalledWithAt(
+  mockedFn: { mock: { calls: { at: (index: number) => unknown[] } } },
+  calledAt: number,
+  paramIndex: number,
+  value: unknown,
+) {
+  const args = mockedFn.mock.calls.at(calledAt);
   assertEquals(Array.isArray(args), true, `Method not called on index ${calledAt}`);
-  assertEquals(args.at(paramIndex), value);
+  assertEquals(args?.at(paramIndex), value);
 }

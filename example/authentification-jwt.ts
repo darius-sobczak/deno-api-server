@@ -3,23 +3,23 @@
  * @obsolate please use on new version of deno the global Crypto API
  * @see https://deno.land/x/djwt
  */
-import { AccessDeniedError, Api, EMethod, IContext, Route } from "../mod.ts";
+import { AccessDeniedError, Api, EMethod, IContext, Route } from '../mod.ts';
 
 // create an api instance
 const api = new Api({ port: 8080 });
 
 // import some inbuild routes and pipes
-import statusRoute from "../src/presets/routes/status.ts";
-import jsonBodyPipe from "../src/presets/pipes/body/json-body.pipe.ts";
+import statusRoute from '../src/presets/routes/status.ts';
+import jsonBodyPipe from '../src/presets/pipes/body/json-body.pipe.ts';
 
 // add status endpoint
 api.addRoute(statusRoute);
 
-import { create, verify } from "https://deno.land/x/djwt/mod.ts";
+import { create, verify } from 'https://deno.land/x/djwt/mod.ts';
 
-const HEADER_KEY = "token";
-const STATE_KEY = "auth";
-const SECRET = "DENOAPI20";
+const HEADER_KEY = 'token';
+const STATE_KEY = 'auth';
+const SECRET = 'DENOAPI20';
 
 /**
  * create custom verify token
@@ -28,7 +28,7 @@ async function verifyPipe({ request, state }: IContext) {
   if (request.headers.has(HEADER_KEY)) {
     try {
       const jwt = <string> request.headers.get(HEADER_KEY);
-      const payload = await verify(jwt, SECRET, "HS512");
+      const payload = await verify(jwt, SECRET, 'HS512');
       state.set(STATE_KEY, payload);
     } catch (e) {
       throw new AccessDeniedError(e.message, 403, e);
@@ -58,15 +58,15 @@ function hasRightPipe(name: string) {
 api
   // add example to create jwt
   .addRoute(
-    new Route(EMethod.GET, "/auth")
+    new Route(EMethod.GET, '/auth')
       .addPipe(async ({ response }) => {
         const authModel = {
-          name: "api-server",
-          rights: ["test"],
+          name: 'api-server',
+          rights: ['test'],
         };
         // tip use expire token for more secure
         const token = await create(
-          { alg: "HS512", typ: "JWT" },
+          { alg: 'HS512', typ: 'JWT' },
           authModel,
           SECRET,
         );
@@ -76,15 +76,15 @@ api
   )
   // add example to create jwt
   .addRoute(
-    new Route(EMethod.GET, "/safe")
+    new Route(EMethod.GET, '/safe')
       // deconstruct jwt if possible
       .addPipe(verifyPipe)
       // save by rights
-      .addPipe(hasRightPipe("test"))
+      .addPipe(hasRightPipe('test'))
       // success
       .addPipe(async ({ response, state }) => {
         response.body = {
-          message: "safe",
+          message: 'safe',
           authData: state.get(STATE_KEY),
         };
       }),

@@ -1,11 +1,11 @@
-import {Api, EEvent, RequestEvent} from "../../mod.ts";
+import { Api, EEvent, RequestEvent } from '../../mod.ts';
 
 interface IConfig {
-  log: (...data: any[]) => void,
-  noIgnoreCheck?: boolean,
-  ignorePatterns?: RegExp[]
-  title?: string | false,
-  noTimestamp?: boolean
+  log: (...data: any[]) => void;
+  noIgnoreCheck?: boolean;
+  ignorePatterns?: RegExp[];
+  title?: string | false;
+  noTimestamp?: boolean;
 }
 
 /**
@@ -22,7 +22,7 @@ export default function plugin(api: Api, config: IConfig) {
 
   addEventListener(EEvent.BEFORE_REQUEST, (event) => {
     if (event instanceof RequestEvent) {
-      const {request} = event as RequestEvent;
+      const { request } = event as RequestEvent;
       const url = `${request.url}`;
 
       if (!config.noIgnoreCheck && /\/healthz$/.test(url)) {
@@ -47,12 +47,14 @@ export default function plugin(api: Api, config: IConfig) {
         log.push((new Date()).toISOString());
       }
 
-      config.log([
-        ...log,
-        request.method,
-        request.url,
-        request.headers.get("user-agent")
-      ].join(" ").trim());
+      config.log(
+        [
+          ...log,
+          request.method,
+          request.url,
+          request.headers.get('user-agent'),
+        ].join(' ').trim(),
+      );
     }
   });
 }

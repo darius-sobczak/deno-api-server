@@ -8,9 +8,9 @@ import {
   IResponse,
   IRoute,
   IStateMap,
-} from "../definition/types.ts";
-import { PatternMatch } from "./matcher/pattern-match.ts";
-import { RequestError } from "../errors/request.error.ts";
+} from '../definition/types.ts';
+import { UriMatch } from './matcher/uri-match.ts';
+import { RequestError } from '../errors/request.error.ts';
 
 export class Route implements IRoute {
   public readonly methods: string[];
@@ -21,9 +21,9 @@ export class Route implements IRoute {
   public parent?: any;
 
   /**
-     * @param method
-     * @param uri
-     */
+   * @param method
+   * @param uri
+   */
   constructor(method: string[] | string, uri: IMatcher | URLPattern | string) {
     // set methods
     if (!Array.isArray(method)) {
@@ -32,33 +32,45 @@ export class Route implements IRoute {
     this.methods = method.map((m) => `${m}`.toUpperCase());
 
     // set uri
-    if (typeof uri === "string") {
-      this.matcher = new PatternMatch(uri);
-    } 
-    else if (uri instanceof URLPattern) {
-      this.matcher = new PatternMatch(uri);
-    }
-    else {
+    if (typeof uri === 'string') {
+      this.matcher = new UriMatch(uri);
+    } else if (uri instanceof URLPattern) {
+      this.matcher = {
+        uri: uri.pathname,
+        getMatch(url: URL) {
+          const result = uri.exec(url);
+          if (result) {
+            return {
+              url,
+              uri: uri.pathname,
+              params: result.pathname.groups,
+              matches: result,
+            };
+          }
+          return null;
+        },
+      };
+    } else {
       this.matcher = uri;
     }
   }
 
   /**
-     * route props
-     *
-     * @param name
-     * @param value
-     */
+   * route props
+   *
+   * @param name
+   * @param value
+   */
   public prop(name: string, value: any) {
     this.props.set(name, value);
     return this;
   }
 
   /**
-     * @param name
-     * @param service
-     * @param overridable
-     */
+   * @param name
+   * @param service
+   * @param overridable
+   */
   public inject(name: string, service: any, overridable: boolean = false) {
     if (this.di.hasOwnProperty(name) && !overridable) {
       throw new Error(`Service ${name} already injected`);
@@ -68,17 +80,17 @@ export class Route implements IRoute {
   }
 
   /**
-     * injection of service
-     * @param di
-     */
+   * injection of service
+   * @param di
+   */
   public injections(di: IInjections): Route {
     this.di = di;
     return this;
   }
 
   /**
-     * @param url
-     */
+   * @param url
+   */
   public isMatch(url: URL): boolean {
     const match = this.matcher.getMatch(url);
     if (match) {
@@ -89,22 +101,22 @@ export class Route implements IRoute {
   }
 
   /**
-     * add route pipe
-     *
-     * @param pipe
-     */
+   * add route pipe
+   *
+   * @param pipe
+   */
   public addPipe(pipe: IPipe): IRoute {
     this.pipes.push(pipe);
     return this;
   }
 
   /**
-     * execute all pipes for current request
-     *
-     * @param url
-     * @param request
-     * @param response
-     */
+   * execute all pipes for current request
+   *
+   * @param url
+   * @param request
+   * @param response
+   */
   public async execute(
     url: URL,
     request: IRequest,
@@ -134,7 +146,7 @@ export class Route implements IRoute {
 
       return context;
     } else {
-      throw new RequestError("Route cannot execute on invalid match");
+      throw new RequestError('Route cannot execute on invalid match');
     }
   }
 }

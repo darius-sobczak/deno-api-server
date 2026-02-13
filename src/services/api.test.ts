@@ -1,37 +1,37 @@
-import { assertEquals } from "../dev_deps.ts";
-import { Api } from "./api.ts";
-import { Route } from "./route.ts";
-import { RequestError } from "../../mod.ts";
-import { MockApi, mockRequest, mockResponse } from "../../dev_mod.ts";
-import { IResponse } from "../definition/types.ts";
+import { assertEquals } from '../dev_deps.ts';
+import { Api } from './api.ts';
+import { Route } from './route.ts';
+import { RequestError } from '../../mod.ts';
+import { MockApi, mockRequest, mockResponse } from '../../dev_mod.ts';
+import { IResponse } from '../definition/types.ts';
 
-Deno.test("Api should be constructable", () => {
+Deno.test('Api should be constructable', () => {
   const api = new Api({ port: 80 });
   assertEquals(api instanceof Api, true);
   assertEquals(api.serverConfig.port, 80);
   assertEquals(api.serverConfig.hostname, undefined);
 });
 
-Deno.test("Api should get route by match", () => {
+Deno.test('Api should get route by match', () => {
   const api = new Api({ port: 8080 });
   assertEquals(api.serverConfig.port, 8080);
 
-  const testRoute = new Route("GET", "/test");
+  const testRoute = new Route('GET', '/test');
   api.addRoute(testRoute);
 
   // should be functional
-  assertEquals("function", typeof api.getRouteByRequest);
+  assertEquals('function', typeof api.getRouteByRequest);
 
   // should be get route
   assertEquals(
     testRoute,
     api.getRouteByRequest(
-      mockRequest("GET", "/test"),
+      mockRequest('GET', '/test'),
     ),
   );
 });
 
-Deno.test("Api should handleError", () => {
+Deno.test('Api should handleError', () => {
   class UnitApi extends MockApi {
     public execHandleError(response: IResponse, error: Error) {
       this.handleError(response, error);
@@ -40,12 +40,12 @@ Deno.test("Api should handleError", () => {
   const api = new UnitApi({ port: 80 });
   const response: IResponse = mockResponse();
 
-  api.execHandleError(response, new Error("any"));
+  api.execHandleError(response, new Error('any'));
   assertEquals(response.status, 500);
-  assertEquals(response.body, { message: "any" });
+  assertEquals(response.body, { message: 'any' });
 
   const response2: IResponse = mockResponse();
-  api.execHandleError(response2, new RequestError("any"));
+  api.execHandleError(response2, new RequestError('any'));
   assertEquals(response2.status, 500);
-  assertEquals(response2.body, { message: "any" });
+  assertEquals(response2.body, { message: 'any' });
 });

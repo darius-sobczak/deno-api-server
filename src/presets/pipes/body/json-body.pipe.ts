@@ -1,5 +1,5 @@
-import { IContext } from "../../../definition/types.ts";
-import { RequestError } from "../../../errors/request.error.ts";
+import { IContext } from '../../../definition/types.ts';
+import { RequestError } from '../../../errors/request.error.ts';
 
 /**
  * will parse request body to json
@@ -10,8 +10,8 @@ import { RequestError } from "../../../errors/request.error.ts";
  */
 export default async function jsonBodyPipe({ state, request }: IContext) {
   try {
-    state.set("bodyType", "json");
-    state.set("body", await request.json());
+    state.set('bodyType', 'json');
+    state.set('body', await request.json());
   } catch (e) {
     throw new RequestError(e.message, 400);
   }

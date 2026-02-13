@@ -1,7 +1,7 @@
-import { IContext, IRoute, IStateMap } from "../definition/types.ts";
-import { mockRequest } from "./mock-request.ts";
-import { mockResponse } from "./mock-response.ts";
-import { Route } from "../services/route.ts";
+import { IContext, IRoute, IStateMap } from '../definition/types.ts';
+import { mockRequest } from './mock-request.ts';
+import { mockResponse } from './mock-response.ts';
+import { Route } from '../services/route.ts';
 
 interface ISetting {
   method?: string;
@@ -16,13 +16,13 @@ export function mockContext(setting: ISetting = {}): IContext {
 
   if (!route) {
     route = new Route(
-      setting?.method || "GET",
-      setting?.url || "/",
+      setting?.method || 'GET',
+      setting?.url || '/',
     );
   }
 
   if (!uri) {
-    uri = "/";
+    uri = '/';
 
     if (route) {
       uri = route.matcher.uri;
@@ -34,12 +34,12 @@ export function mockContext(setting: ISetting = {}): IContext {
     di: route.di,
     match: {
       params: new Map(),
-      url: new URL(uri, "http://localhost"),
+      url: new URL(uri, 'http://localhost'),
       uri,
       // @ts-ignore
       matches: [],
     },
-    url: new URL(uri, "http://localhost"),
+    url: new URL(uri, 'http://localhost'),
     request: mockRequest(setting?.method || route.methods[0], uri),
     response: mockResponse(),
     state: setting?.state || new Map(),

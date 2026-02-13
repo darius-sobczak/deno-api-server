@@ -1,4 +1,4 @@
-import { Api, EMethod, IRoute, KeyMatch, Route } from "../../mod.ts";
+import { Api, EMethod, IRoute, Route } from '../../mod.ts';
 
 interface ISwaggerInfo {
   title: string;
@@ -29,8 +29,6 @@ interface ISwaggerTag {
   externalDocs?: ISwaggerExternalDocs;
 }
 
-const validSchemaTypes = ["string", "array", "object", "integer", "number"];
-
 interface ISwaggerParameterSchemaRef {
   $ref: string;
 }
@@ -45,10 +43,10 @@ interface ISwaggerParameterSchema {
 
 interface ISwaggerRouteParameter {
   name: string;
-  in: string | "query" | "path" | "header";
+  in: string | 'query' | 'path' | 'header';
   description?: string;
   required: boolean;
-  style?: "form" | "json";
+  style?: 'form' | 'json';
   explode?: boolean;
   schema: ISwaggerParameterSchema | ISwaggerParameterSchemaRef;
 }
@@ -63,7 +61,7 @@ interface ISwaggerPath {
   parameters: ISwaggerRouteParameter[];
   responses: TSwaggerResponses;
 }
-const validPathProps = ["summary", "description", "operationId"];
+const validPathProps = ['summary', 'description', 'operationId'];
 
 interface ISwaggerResponse {
   description: string;
@@ -91,26 +89,24 @@ interface IConfig {
  * @param uri
  */
 function getUri(uri: string): string {
-  return uri.replace(/\:([a-z-A-Z0-9_-]+)/gm, "{$1}");
+  return uri.replace(/\:([a-z-A-Z0-9_-]+)/gm, '{$1}');
 }
 
 export default function plugin(api: Api, config: IConfig) {
-  const routePropName = "swagger";
-  const basePath = config?.basePath || "";
+  const routePropName = 'swagger';
+  const basePath = config?.basePath || '';
   const swaggerUri = `${basePath}/swagger.json`;
   const jsonEndpointRoute = new Route(EMethod.GET, swaggerUri);
 
   // config servers
-  const servers: ISwaggerServer[] = Array.isArray(config?.servers)
-    ? [...config.servers]
-    : [];
+  const servers: ISwaggerServer[] = Array.isArray(config?.servers) ? [...config.servers] : [];
 
   if (config?.serverUrl) {
     servers.push({ url: `${config?.serverUrl}` });
   }
   servers.push({ url: api.host });
 
-  jsonEndpointRoute.addPipe(async ({ response }) => {
+  jsonEndpointRoute.addPipe(({ response }) => {
     const definitions: TSwaggerDefinition = {
       ...config?.definitions,
     };
@@ -123,42 +119,14 @@ export default function plugin(api: Api, config: IConfig) {
       if (route instanceof Route) {
         // assign path infos
         route.methods.forEach((method: string) => {
-          const parameters = [];
-
-          // add parameters by keymatch
-          if (route.matcher instanceof KeyMatch) {
-            const describe = route.matcher.describe;
-
-            for (const name in describe) {
-              const keyDescribe = describe[name];
-
-              const type = `${keyDescribe.type}`.toLowerCase();
-
-              const param: ISwaggerRouteParameter = {
-                in: "path",
-                name,
-                required: true,
-                schema: {
-                  type: "string",
-                },
-              };
-
-              if (validSchemaTypes.includes(type)) {
-                param.schema = {
-                  type,
-                };
-              }
-
-              parameters.push(param);
-            }
-          }
+          const parameters: ISwaggerRouteParameter[] = [];
 
           const swaggerPath: ISwaggerPath = {
             tags: [],
             parameters,
             responses: {
-              "200": {
-                description: "OK",
+              '200': {
+                description: 'OK',
               },
             },
           };
@@ -206,7 +174,7 @@ export default function plugin(api: Api, config: IConfig) {
     }
 
     response.body = {
-      openapi: "3.0.1",
+      openapi: '3.0.1',
       info: config.info,
       tags: config.tags,
       servers,

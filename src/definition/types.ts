@@ -1,5 +1,3 @@
-export { EPatternTypes } from "./pattern-map.ts";
-
 export type IRequest = Request;
 
 export interface IServerConfig {
@@ -45,11 +43,11 @@ export interface IRoute {
 }
 
 export interface IMatch {
-  params: IStateMap
+  params: IStateMap;
   url: URL;
-  uri: string
-  matches?: RegExpMatchArray | URLPatternResult
-  [key: string]: any
+  uri: string;
+  matches?: RegExpMatchArray | URLPatternResult;
+  [key: string]: any;
 }
 
 export type IMatching = IMatch | null;
@@ -57,17 +55,6 @@ export type IMatching = IMatch | null;
 export interface IMatcher {
   readonly uri: string;
   getMatch(url: URL): IMatching;
-}
-
-export interface IKeyDescribe {
-  type?: string;
-  describe?: IPatternDescribe;
-  key?: string;
-  transform?: (v: string) => any;
-}
-
-export interface IKeyDescribes {
-  [key: string]: IKeyDescribe;
 }
 
 export interface IContext {
@@ -80,11 +67,6 @@ export interface IContext {
   state: IStateMap;
 }
 
-export type IPipe = (context: IContext) => void;
+export type IPipe = (context: IContext) => void | symbol | Promise<void | symbol>;
 
-export interface IPatternDescribe {
-  readonly pattern: string;
-  transform: (v: string) => any;
-}
-
-export const BreakPipe = Symbol("BreakPipe");
+export const BreakPipe = Symbol('BreakPipe');

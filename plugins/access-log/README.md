@@ -2,7 +2,6 @@
 
 Plugin for `deno-api-server` to log all access of api
 
-
 ## Integration
 
 ```ts

@@ -1,4 +1,4 @@
-import { IResponse } from "../definition/types.ts";
+import { IResponse } from '../definition/types.ts';
 
 /**
  * create response mock object

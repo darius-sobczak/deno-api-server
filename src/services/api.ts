@@ -1,16 +1,11 @@
-import {
-  IResponse,
-  IRoute,
-  IServerConfig,
-  IStateMap,
-} from "../definition/types.ts";
-import { serve } from "../deps.ts";
-import { RequestError } from "../errors/request.error.ts";
-import { EEvent } from "../definition/event.ts";
-import RouteEvent from "../definition/events/route.event.ts";
-import RequestEvent from "../definition/events/request.event.ts";
-import ErrorEvent from "../definition/events/error.event.ts";
-import { Raw } from "./raw.ts";
+import { IResponse, IRoute, IServerConfig, IStateMap } from '../definition/types.ts';
+import { serve } from '../deps.ts';
+import { RequestError } from '../errors/request.error.ts';
+import { EEvent } from '../definition/event.ts';
+import RouteEvent from '../definition/events/route.event.ts';
+import RequestEvent from '../definition/events/request.event.ts';
+import ErrorEvent from '../definition/events/error.event.ts';
+import { Raw } from './raw.ts';
 
 export class Api {
   public routes: IRoute[] = [];
@@ -24,16 +19,16 @@ export class Api {
   }
 
   get host() {
-    const hostname = this.serverConfig.hostname || "localhost";
+    const hostname = this.serverConfig.hostname || 'localhost';
     const port = this.serverConfig.port || 80;
-    const proto = this.serverConfig.https ? "https" : "http";
+    const proto = this.serverConfig.https ? 'https' : 'http';
     return `${proto}://${hostname}:${port}`;
   }
 
   /**
-     * Add route to server stack
-     * @param route
-     */
+   * Add route to server stack
+   * @param route
+   */
   public addRoute(route: IRoute): Api {
     route.parent = this;
 
@@ -48,11 +43,11 @@ export class Api {
   }
 
   /**
-     * resolve route by request
-     *
-     * @param request
-     * @param {URL|null} url
-     */
+   * resolve route by request
+   *
+   * @param request
+   * @param {URL|null} url
+   */
   public getRouteByRequest(request: Request, url?: URL): null | IRoute {
     url = url || this.getUrlByRequest(request);
 
@@ -67,8 +62,8 @@ export class Api {
   }
 
   /**
-     * start server listing on requests
-     */
+   * start server listing on requests
+   */
   public async listen() {
     const incoming = async (request: Request) => {
       const url = this.getUrlByRequest(request);
@@ -96,10 +91,11 @@ export class Api {
           );
         }
       } catch (e) {
-        this.handleError(response, e);
-    
+        const error = e instanceof Error ? e : new Error(String(e));
+        this.handleError(response, error);
+
         dispatchEvent(
-          new ErrorEvent(EEvent.ROUTE_ERROR, e, { response, request }),
+          new ErrorEvent(EEvent.ROUTE_ERROR, error, { response, request }),
         );
       }
 
@@ -110,23 +106,30 @@ export class Api {
             response.body = response.body.body;
           } // auto transform to json
           else if (
-            typeof response.body !== "string" &&
-            !response.headers.has("Content-Type")
+            typeof response.body !== 'string' &&
+            !response.headers.has('Content-Type')
           ) {
-            response.headers.set("Content-Type", "application/json");
+            response.headers.set('Content-Type', 'application/json');
             response.body = JSON.stringify(response.body);
           }
         }
 
-        return new Response(response.body, { status: response.status, statusText: response.message, headers: response.headers });
+        return new Response(response.body, {
+          status: response.status,
+          statusText: response.message,
+          headers: response.headers,
+        });
       } catch (e) {
+        const error = e instanceof Error ? e : new Error(String(e));
         dispatchEvent(
-          new ErrorEvent(EEvent.CRITICAL_ERROR, e, { response, request }),
+          new ErrorEvent(EEvent.CRITICAL_ERROR, error, { response, request }),
         );
-        return new Response('', { status: response.status, statusText: e.message || 'Critical error' });
-        
+        return new Response('', {
+          status: response.status,
+          statusText: error.message || 'Critical error',
+        });
       }
-    }
+    };
 
     // start server
     await serve(incoming, this.serverConfig);
@@ -146,8 +149,8 @@ export class Api {
       response.status = 500;
     }
 
-    if (typeof body === "object") {
-      Object.assign(body, typeof message === "object" ? message : { message });
+    if (typeof body === 'object') {
+      Object.assign(body, typeof message === 'object' ? message : { message });
     } else {
       body = message;
     }
