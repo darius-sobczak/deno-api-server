@@ -1,21 +1,27 @@
 # deno-api-server
 
-An http/rest api server for deno. Based on std deno http library and use the
-concept of functional programming for your endpoint definitions.
+A functional HTTP/REST API server framework for Deno. Built on Deno's standard HTTP library with a focus on composability and functional programming patterns.
 
-- [API Documentation](https://doc.deno.land/https/deno.land/x/deno_api_server/mod.ts)
-- [Preset API Documentation](https://doc.deno.land/https/deno.land/x/deno_api_server/src/presets/mod.ts)
-- [Testing API Documentation](https://doc.deno.land/https/deno.land/x/deno_api_server/dev_mod.ts)
-- [Release notes](./RELEASE_NOTES.md)
+[![Deno Doc](https://doc.deno.land/badge.svg)](https://doc.deno.land/https/deno.land/x/deno_api_server/mod.ts)
+[![Release Notes](./RELEASE_NOTES.md)](./RELEASE_NOTES.md)
+[![Getting Started](GETTING_STARTED.md)](GETTING_STARTED.md)
 
-## Basic functionality example
+## Features
+
+✅ **Functional Design**: Build APIs using composable pipe functions
+✅ **TypeScript First**: Full TypeScript support with comprehensive type definitions
+✅ **Lightweight**: Minimal dependencies, built on Deno standard library
+✅ **Flexible Routing**: Support for simple strings, URL patterns, and key matching
+✅ **Middleware Pipes**: Chainable request/response processing
+✅ **Dependency Injection**: Built-in DI system for routes
+✅ **Event System**: Hook into server lifecycle events
+✅ **Testing Utilities**: Built-in mocking for easy testing
+✅ **Plugin System**: Extensible architecture with plugins
+
+## Quick Example
 
 ```typescript
-import {
-  Api,
-  EMethod,
-  Route,
-} from "https://deno.land/x/deno_api_server/mod.ts";
+import { Api, EMethod, Route } from "https://deno.land/x/deno_api_server/mod.ts";
 
 const api = new Api({ port: 8080 });
 
@@ -23,419 +29,112 @@ api.addRoute(
   new Route(EMethod.GET, "/")
     .addPipe(({ response }) => {
       response.body = { message: "Hello API" };
-    }),
+    })
 );
 
-console.log(`Start server localhost:${api.serverConfig.port}`);
+console.log(`Server running on http://localhost:${api.serverConfig.port}`);
 await api.listen();
 ```
 
-## events
-
-`API_ADD_ROUTE` (RouteEvent) will trigger before a new route append to api
-stack. Tip use this as injection hook for your services
-
-`BEFORE_ROUTE` (RouteEvent) will trigger before execute the current route
-
-`BEFORE_REQUEST` (RequestEvent) will trigger before a route are detected and
-before it execute
-
-`ROUTE_NOT_FOUND` (RequestEvent) will trigger if route not match [404]
-
-`ROUTE_ERROR` Error on route execute [500]
-`CRITICAL_ERROR` Critical error on response execution [500]
-
-## More code examples
-
-### Add simple route to your api
-
-```typescript
-/** INFO: don't forget route to your Api, see first example **/
-new Route(EMethod.GET, '/say-hello')
-    .addPipe(({response}) => {
-        response.body = {message: 'Hello API'};
-    })
-)
+Run with:
+```bash
+deno run --allow-net main.ts
 ```
 
-### Add simple route with multi methods
+## Documentation
+
+- **[Getting Started](GETTING_STARTED.md)** - New to deno-api-server? Start here!
+- **[API Documentation](API_DOCUMENTATION.md)** - Detailed API reference
+- **[Testing Guide](TESTING.md)** - Testing strategies and utilities
+- **[Plugins Guide](PLUGINS.md)** - Available plugins and plugin development
+- **[Best Practices](BEST_PRACTICES.md)** - Development best practices
+- **[Examples Guide](EXAMPLES.md)** - Practical usage examples
+- **[Release Notes](RELEASE_NOTES.md)** - What's new and changed
+
+## Core Concepts
+
+### Functional Pipes
+The framework is built around the concept of functional pipes - small, focused functions that process requests and responses.
 
 ```typescript
-/** INFO: don't forget route to your Api, see first example **/
-new Route([EMethod.GET, EMethod.POST], "/say-hello")
-  .addPipe(({ response, request }) => {
-    response.body = { message: `Hello API by ${request.method}` };
-  });
+// Pipes are just functions that take a context and optionally return a promise
+const loggingPipe = (context) => {
+  console.log(`Request: ${context.request.method} ${context.request.url}`);
+};
+
+const authPipe = async (context) => {
+  // Authentication logic here
+};
+
+// Chain pipes together
+new Route(EMethod.GET, "/secure")
+  .addPipe(loggingPipe)
+  .addPipe(authPipe)
+  .addPipe(handlerPipe);
 ```
 
-### Use state to pass data between pipes
+### Route Matching
+Support for multiple matching strategies:
 
 ```typescript
-/** INFO: don't forget route to your Api, see first example **/
-new Route(EMethod.GET, "/state")
-  .addPipe(({ response, state }) => {
-    const before = new Date();
-    response.body = { before };
-    state.set("called", before);
+// Simple string matching
+new Route(EMethod.GET, "/users");
+
+// URLPattern matching (standard web API)
+new Route(EMethod.GET, new URLPattern({ pathname: "/users/:id" }));
+
+// KeyMatch with type conversion
+import { KeyMatch } from "https://deno.land/x/deno_api_server/mod.ts";
+new Route(EMethod.GET, new KeyMatch("/users/:id", { id: { type: "number" } }));
+```
+
+### Dependency Injection
+Share services between pipes:
+
+```typescript
+new Route(EMethod.GET, "/users")
+  .injections({
+    userService: new UserService()
   })
-  .addPipe(({ response, state }) => {
-    Object.assign(response.body, {
-      passed: state.get("called"),
-      done: new Date(),
-    });
+  .addPipe(({ di }) => {
+    const users = di.userService.getAll();
+    // ...
   });
 ```
 
-### Throw error to handle by api
+## Examples
 
-```typescript
-/** INFO: don't forget route to your Api, see first example **/
-new Route(EMethod.GET, "/error")
-  .addPipe(() => {
-    throw new RequestError("I dont like", 400);
-  });
-```
+Explore the [examples directory](example/) for practical usage patterns:
 
-### Key mapped uri with KeyMatch for url params
-
-```typescript
-new Route(
-  EMethod.GET,
-  new KeyMatch(
-    "/get-by-key-name/:id/:name",
-    {
-      id: { type: "number" },
-      name: {},
-    },
-  ),
-)
-  .addPipe(({ response, match }) => {
-    const { params } = match;
-    response.body = {
-      message: `You call with keymatch`,
-      id: params.get("id"),
-      name: params.get("name"),
-    };
-  });
-```
-
-For more details about KeyMatch see API Documentation KeyMatch
-
-# API Dokumentation
-
-### class Api
-
-Core server class, create an instance for your own api
-
-Similar configuration of deno http service
-
-```
-new Api(config: IServerConfig)
-```
-
-Add new Routes / Entpoints
-
-```
-api.addRoute(route: IRoute)
-```
-
-Start server to listen
-
-```
-api.listen();
-```
-
-### class Route
-
-Core route or entpoint defintion for your api.
-
-```
-new Route(method: string[] | string, uri : IMatcher | string)
-```
-
-Add route pipeline
-
-```
-route.addPipe(pipe: IPipe) : Route
-```
-
-Example: Add a stack of pipes
-
-```
-route
-    .addPipe((context: IContext) => { ... })
-    .addPipe(async (context: IContext) => { ... })
-```
-
-`Tip` use deconstruction for select context props
-
-Execute a route pipeline, this will be called by api if route match with uri
-defintion
-
-```
-route.execute(url: URL, request: ServerRequest, response: IResponse): Promise<IContext>
-```
-
-## Matcher
-
-### class UriMatch
-
-Base endpoint matcher for simple definition of uris.
-
-`INFO` you can use a string for Route definition, the Route will create a simple
-UriMatch
-
-## class KeyMatch
-
-More complex uri definition for your route with transpile your parameters. A
-KeyMatch can use a transform function to change the type of value
-
-```
-new KeyMatch(uri: string, describe: IKeyDescribes)
-```
-
-Examples:
-
-```
-new KeyMatch('/get/:id', { id: {} }) => match: /get/1, params: { id: '1' }
-new KeyMatch('/get/:id', { id: {} }) => match: /get/hello-my, params: { id: 'hello-my' }
-
-// with transpile type
-new KeyMatch('/get/:id', { id: { type: 'number' } }) => match: /get/1, params: { id: 1 }
-new KeyMatch('/get/:id', { id: { type: 'number' } }) => not match: /get/hello
-
-// with rest type
-new KeyMatch('/get/:path', { path: { type: 'rest' } }) => match /get/super-dup/megaman, params: { path: 'super-dup/megaman' }
-```
-
-### IKeyDescribe.type
-
-A list of `EPatternTypes`
-
-- `Any` for any parameter like string, number and combination
-- `Number` for float and numbers
-- `Int` for integer numbers
-- `Alpha` for alphabetic values
-- `Hash` for hash values
-- `Rest` for rest of the url path
-
-### Custom methode to define a custom param pattern
-
-Use Property `describe` to define a `IPatternDescribe`
-
-Example:
-
-```js
-new KeyMatch('/get/:p', { 
-  p: {
-    describe: {
-      pattern: '(a-z){1}',
-      transform: (v: string) => v.toUpperCase()
-    }
-  }
-}) => will match /get/g, params: { p: 'G' }
-```
-
-## Quick test api server
-
-```typescript
-import "https://deno.land/x/deno_api_server@v0.0.2/example.ts";
-/**
- * will start server on localhost:8080
- * try all entpoints on example
- **/
-```
-
-All presets defined in `src/presets`
-
-## List of presets
-
-[Preset API Documentation](https://doc.deno.land/https/deno.land/x/deno_api_server/src/presets/mod.ts)
-
-All presets defined in `src/presets`
-
-
-### Pipes presets `src/presets/pipes/*`
-
-#### `body/raw-body.pipe.ts`
-
-Read body data of request.
-
-Set state `body` with string data Set state `bodyType` with the type of data ==
-raw
-
-```typescript
-import rawBodyPipe from "https://deno.land/x/deno_api_server/src/presets/pipes/body/raw-body.pipe.ts";
-route
-  .addPipe(rawBodyPipe)
-  .addPipe(({ state }: IContext) => {
-    const anyBody = state.get("body");
-  });
-```
-
-#### `body/json-body.pipe.ts`
-
-Try to parse json data of request body. Otherwise throw 400 error.
-
-Set state `body` with json data Set state `bodyType` with the type of data ==
-json
-
-```typescript
-import jsonBodyPipe from "https://deno.land/x/deno_api_server/src/presets/pipes/body/json-body.pipe.ts";
-route
-  .addPipe(jsonBodyPipe)
-  .addPipe(({ state }: IContext) => {
-    const validJsonBody = state.get("body");
-  });
-```
-
-#### `process/redirect.pipe.ts`
-
-Redirect pipe with default 302 redirection to your url. Basic implementation to
-redirect your route.
-
-```typescript
-import redirectPipe from "https://deno.land/x/deno_api_server/src/presets/pipes/process/redirect.pipe.ts";
-route
-  .addPipe(redirectPipe("/other-page"));
-```
-
-If you want to redirect a dynamic page use any capsule pipe function, like here
-
-```typescript
-import redirectPipe from "https://deno.land/x/deno_api_server/src/presets/pipes/process/redirect.pipe.ts";
-route
-  .addPipe((context: IContext) => {
-    const url = `/test-to-my?set=1`;
-    return redirectPipe(url)(context);
-  });
-```
-
-## Testing
-
-Use buildin mocks to create a api request.
-
-[Build-In](https://deno.land/x/deno_api_server/dev_mod.ts)
-[API Documentation](https://doc.deno.land/https/deno.land/x/deno_api_server/dev_mod.ts)
-
-A simple example
-
-```typescript
-import { mockApi } from "https://deno.land/x/deno_api_server/dev_mod.ts";
-
-Deno.test("Example mockApi route success request", async () => {
-  const route = new Route("GET", "/hello");
-
-  // create api
-  const api = mockApi(route);
-
-  await api.sendByArguments("GET", "/hello");
-
-  assertEquals(api.lastRoute === route, true);
-  assertEquals(api?.lastContext?.response.status, 200);
-});
-```
-
-A payload example
-
-```typescript
-import {
-  mockApi,
-  mockRequest,
-} from "https://deno.land/x/deno_api_server/dev_mod.ts";
-
-Deno.test("Example mockApi post request with request data", async () => {
-  const route = new Route("POST", "/submit");
-  route
-    .addPipe(jsonBodyPipe)
-    .addPipe(({ state, response }) => {
-      response.status = 201;
-      response.body = state.get("body");
-    });
-
-  const api = mockApi(route);
-
-  const request = mockRequest("POST", "/submit", {
-    name: "super",
-  });
-  await api.sendByRequest(request);
-
-  assertEquals(api.lastRoute === route, true);
-  assertEquals(api?.lastContext?.response.status, 201);
-  assertEquals(api?.lastContext?.response.body, { name: "super" });
-});
-```
-
-More examples in `example/unit-testing.test.ts`
-
-## Best Practice
-
-Tips and best practice to use this server.
-
-- Write custom and small pipes to reuse
-- create a custom createRoute function to setup your app or use events to inject
-  services
-- use Route.di / Route.injections to share services and other stuff
-- create factory functions for injections, like getConnection factory to connect
-  to database only if route will execute
-- write test by mock your injections (like mock service for your database
-  connection)
-- use state to pass data between your pipes
-
-## examples
-
-See `example` folder for more use case examples.
-
-#### `example/unit-testing.test.ts`
-
-route and api testing example and how to use build-in mock functions.
-
-### Third party examples are
-
-#### example/body-validation.ts
-
-Use validasaur to validate your json body
-[validasaur deno.land](https://deno.land/x/validasaur)
-
-#### example/authentification-jwt.ts
-
-Use djwt to handle and secure your endpoints, a very simple example to customize
-your process [validasaur deno.land](https://deno.land/x/djwt)
-
-## links
-
-[deno](https://deno.land)
+- [`main.ts`](example/main.ts) - Comprehensive example with multiple routes
+- [`authentification-jwt.ts`](example/authentification-jwt.ts) - JWT authentication
+- [`body-validation.ts`](example/body-validation.ts) - Request body validation
+- [`unit-testing.test.ts`](example/unit-testing.test.ts) - Testing patterns
 
 ## Plugins
-`info` import the plugin to your api main and regist by call the default function.
 
-```
-import plugin from 'PLUGIN.ts'
+Extend functionality with plugins:
 
-const api = new Api();
-plugin(api, { /* plugin configuration */ })
-```
+- **@deno-api-server/swagger** - API documentation (WIP)
+- **@deno-api-server/healthcheck** - Health check endpoints
+- **@deno-api-server/status** - Server status monitoring
+- **@deno-api-server/access-log** - Request logging
+- **@deno-api-server/add-route** - Route registration logging
 
-### Swagger json
-use plugins/swagger, but still in WIP
+## Contributing
 
-### healthcheck
-use plugins/healthcheck add add this plugin like
+Contributions are welcome! Please see our [contribution guidelines](CONTRIBUTING.md) (coming soon).
 
-`depricated since 0.6.0` preset/health
+## License
 
-### status
-use plugins/status to show more details about server status, you can add more details for your endpoint by use body oder the custom handler.
+MIT © Darius Sobczak
 
-`depricated since 0.6.0` preset/status
+## Support
 
-### access-log `since 0.6.0`
-use plugins/status to show all request actions, optional filtering of checks
+- **Issues**: Report bugs and request features on GitHub
+- **Discussions**: Join the conversation and ask questions
+- **Documentation**: Help improve our docs
 
+---
 
-### add-route `since 0.6.1`
-use plugins/add-route to show all route registration by using a custom log handler
-
-
-
-
+**Star this repo if you find it useful!** 🌟
