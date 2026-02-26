@@ -8,12 +8,11 @@ import { AccessDeniedError, Api, EMethod, IContext, Route } from '../mod.ts';
 // create an api instance
 const api = new Api({ port: 8080 });
 
-// import some inbuild routes and pipes
-import statusRoute from '../src/presets/routes/status.ts';
-import jsonBodyPipe from '../src/presets/pipes/body/json-body.pipe.ts';
+// import status plugin
+import statusPlugin from '../plugins/status/plugin.ts';
 
-// add status endpoint
-api.addRoute(statusRoute);
+// add status endpoint using plugin
+statusPlugin(api);
 
 import { create, verify } from 'https://deno.land/x/djwt/mod.ts';
 
@@ -21,37 +20,49 @@ const HEADER_KEY = 'token';
 const STATE_KEY = 'auth';
 const SECRET = 'DENOAPI20';
 
+// Create a CryptoKey for HMAC-SHA512
+const key = await crypto.subtle.importKey(
+  "raw",
+  new TextEncoder().encode(SECRET),
+  { name: "HMAC", hash: "SHA-512" },
+  false,
+  ["sign", "verify"]
+);
+
 /**
  * create custom verify token
  */
 async function verifyPipe({ request, state }: IContext) {
   if (request.headers.has(HEADER_KEY)) {
     try {
-      const jwt = <string> request.headers.get(HEADER_KEY);
-      const payload = await verify(jwt, SECRET, 'HS512');
-      state.set(STATE_KEY, payload);
+      const jwt = request.headers.get(HEADER_KEY);
+      if (typeof jwt === 'string') {
+        const payload = await verify(jwt, key);
+        state.set(STATE_KEY, payload);
+      }
     } catch (e) {
-      throw new AccessDeniedError(e.message, 403, e);
+      const error = e instanceof Error ? e : new Error('Unknown error');
+      throw new AccessDeniedError(error.message, 403, error);
     }
   }
   // maybe you throw an error if header and token not valid
 }
 
-// to secure other endpointy by detect right
-function hasRightPipe(name: string) {
-  return ({ request, state }: IContext) => {
-    if (state.has(STATE_KEY)) {
-      const auth = state.get(STATE_KEY);
-      if (auth && Array.isArray(auth.rights)) {
-        if (auth.rights.includes(name)) {
-          return; // continue
+  // to secure other endpointy by detect right
+  function hasRightPipe(name: string) {
+    return ({ state }: IContext) => {
+      if (state.has(STATE_KEY)) {
+        const auth = state.get(STATE_KEY);
+        if (auth && Array.isArray(auth.rights)) {
+          if (auth.rights.includes(name)) {
+            return; // continue
+          }
         }
       }
-    }
 
-    throw new AccessDeniedError();
-  };
-}
+      throw new AccessDeniedError();
+    };
+  }
 
 ////// add routes
 
@@ -64,12 +75,12 @@ api
           name: 'api-server',
           rights: ['test'],
         };
-        // tip use expire token for more secure
-        const token = await create(
-          { alg: 'HS512', typ: 'JWT' },
-          authModel,
-          SECRET,
-        );
+    // tip use expire token for more secure
+    const token = await create(
+      { alg: 'HS512', typ: 'JWT' },
+      authModel,
+      key,
+    );
 
         response.body = { token };
       }),

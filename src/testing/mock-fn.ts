@@ -17,6 +17,13 @@ export function mockFn(implementation: Function = () => {}) {
     returns: [],
   };
 
+  // Add array methods to calls if they don't exist
+  if (!mock.calls.at) {
+    mock.calls.at = function(index: number) {
+      return this[index];
+    };
+  }
+
   //@ts-ignore
   function fn(...args) {
     //@ts-ignore

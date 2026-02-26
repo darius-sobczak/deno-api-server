@@ -7,12 +7,14 @@ import { Api, BadRequestError, EMethod, IContext, Route } from '../mod.ts';
 // create an api instance
 const api = new Api({ port: 8080 });
 
-// import some inbuild routes and pipes
-import statusRoute from '../src/presets/routes/status.ts';
+// import some inbuild pipes
 import jsonBodyPipe from '../src/presets/pipes/body/json-body.pipe.ts';
 
-// add basic status route
-api.addRoute(statusRoute);
+// import status plugin
+import statusPlugin from '../plugins/status/plugin.ts';
+
+// add status endpoint using plugin
+statusPlugin(api);
 
 /**
  * use validasaur library for validation of body
