@@ -1,17 +1,13 @@
-import { assertEquals } from '../../src/dev_deps.ts';
-import { mockApi, mockFn } from '../../dev_mod.ts';
-import { Route } from '../../mod.ts';
+import { testApi } from '../../dev_mod.ts';
+import { Api, Route } from '../../mod.ts';
 import plugin from './plugin.ts';
 
-Deno.test('Access log plugin', async () => {
+Deno.test('Status plugin', async () => {
   const route = new Route('GET', '/hello');
-  const log = mockFn();
 
-  // create api
-  const api = mockApi(route);
-
-  // install plugin
+  const api = new Api({ port: 80 });
+  api.addRoute(route);
   plugin(api);
 
-  await api.sendByArguments('GET', '/hello');
+  await testApi(api).request('GET', { uri: '/hello' });
 });

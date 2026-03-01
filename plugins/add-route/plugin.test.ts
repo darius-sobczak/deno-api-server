@@ -1,15 +1,12 @@
 import { assertCalledCount, assertCalledWithAt } from '../../src/dev_deps.ts';
-import { mockApi, mockFn } from '../../dev_mod.ts';
-import { Route } from '../../mod.ts';
+import { mockFn } from '../../dev_mod.ts';
+import { Api, Route } from '../../mod.ts';
 import plugin from './plugin.ts';
 
-Deno.test('Add Route plugin', async () => {
+Deno.test('Add Route plugin', () => {
   const log = mockFn();
 
-  // create api
-  const api = mockApi(); // no add route before plugin ready
-
-  // install plugin
+  const api = new Api({ port: 80 });
   plugin(api, { log });
 
   assertCalledCount(log, 0);
@@ -18,13 +15,10 @@ Deno.test('Add Route plugin', async () => {
   assertCalledWithAt(log, 0, 0, 'Add Route GET /hello');
 });
 
-Deno.test('Add Route plugin with custom title', async () => {
+Deno.test('Add Route plugin with custom title', () => {
   const log = mockFn();
 
-  // create api
-  const api = mockApi(); // no add route before plugin ready
-
-  // install plugin
+  const api = new Api({ port: 80 });
   plugin(api, { log, title: 'New Route created' });
 
   assertCalledCount(log, 0);

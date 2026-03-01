@@ -1,5 +1,5 @@
 /**
- * example how to test your api
+ * Examples: how to test your API with testRoute and testApi
  */
 
 import {
@@ -7,13 +7,12 @@ import {
   assertCalledWith,
   assertCalledWithAt,
   assertEquals,
-  assertRejects,
 } from '../src/dev_deps.ts';
-import { AccessDeniedError, EMethod, IContext, RequestError, Route } from '../mod.ts';
-
-// use build-in mocks
-import { mockApi, mockContext, mockFn, mockRequest, mockResponse } from '../dev_mod.ts';
+import { AccessDeniedError, Api, EMethod, IContext, RequestError, Route } from '../mod.ts';
+import { mockContext, mockFn, testApi, testRoute } from '../dev_mod.ts';
 import jsonBodyPipe from '../src/presets/pipes/body/json-body.pipe.ts';
+
+// --- mockFn examples ---
 
 Deno.test('Example who to use util mockFn', async () => {
   const m = mockFn();
@@ -23,23 +22,19 @@ Deno.test('Example who to use util mockFn', async () => {
     m();
   });
 
-  // create api
-  const api = mockApi(route);
+  const result = await testRoute(route).request('GET');
 
-  assertEquals(m.mock.calls.length, 0);
-  await api.sendByArguments('GET', '/hello');
-  assertEquals(api?.lastContext?.response.status, 200);
-
+  assertEquals(result.ok, true);
+  assertEquals(result.statusCode, 200);
   assertEquals(m.mock.calls.length, 1);
 });
 
-Deno.test('Example who to use util mockFn with assert funtions', async () => {
+Deno.test('Example who to use util mockFn with assert funtions', () => {
   const m = mockFn();
 
   assertCalledCount(m, 0);
 
   m();
-
   m('hello');
   m('hello my', 12);
 
@@ -56,56 +51,61 @@ Deno.test('Example who to use util mockFn as injection', async () => {
     di.callMe.say('hello');
   });
 
-  // create api
-  const api = mockApi(route);
+  const result = await testRoute(route)
+    .inject({ callMe: { say } })
+    .request('GET');
 
-  api.mockInjections({
-    callMe: {
-      say,
-    },
-  });
-
-  assertEquals(say.mock.calls.length, 0);
-  await api.sendByArguments('GET', '/hello');
-  assertEquals(api?.lastContext?.response.status, 200);
-
+  assertEquals(result.ok, true);
   assertEquals(say.mock.calls.length, 1);
-  // arguments
   assertEquals(say.mock.calls[0], ['hello']);
 });
 
-/**
- * example by using a api mock
- */
-Deno.test('Example mockApi sendByArguments', async () => {
+// --- testRoute examples ---
+
+Deno.test('Example testRoute basic request', async () => {
   const route = new Route('GET', '/hello');
+  route.addPipe(({ response }) => {
+    response.body = { kind: 'test' };
+  });
 
-  // create api
-  const api = mockApi(route);
+  const result = await testRoute(route).request('GET');
 
-  await api.sendByArguments('GET', '/hello');
-
-  assertEquals(api.lastRoute === route, true);
-  assertEquals(api?.lastContext?.response.status, 200);
+  assertEquals(result.ok, true);
+  assertEquals(result.statusCode, 200);
+  assertEquals(result.body, { kind: 'test' });
 });
 
-/**
- * example by using a api mock
- */
-Deno.test('Example mockApi sendByRequest', async () => {
+Deno.test('Example testRoute with request headers', async () => {
   const route = new Route('GET', '/hello');
+  route.addPipe(({ response, request }) => {
+    response.body = {
+      kind: 'test',
+      header: request.headers.get('test-env'),
+    };
+  });
 
-  // create api
-  const api = mockApi(route);
+  const result = await testRoute(route).request('GET', {
+    headers: { 'test-env': 'deno test' },
+  });
 
-  const request = mockRequest('GET', '/hello');
-  await api.sendByRequest(request);
-
-  assertEquals(api.lastRoute === route, true);
-  assertEquals(api?.lastContext?.response.status, 200);
+  assertEquals(result.ok, true);
+  assertEquals(result.body.header, 'deno test');
 });
 
-Deno.test('Example mockApi post request with request data', async () => {
+Deno.test('Route example will throw request error', async () => {
+  const route = new Route('GET', '/hello');
+  route.addPipe(() => {
+    throw new RequestError('error x', 400);
+  });
+
+  const result = await testRoute(route).request('GET');
+
+  assertEquals(result.ok, false);
+  assertEquals(result.statusCode, 400);
+  assertEquals(result.error?.message, 'error x');
+});
+
+Deno.test('Example testRoute POST with json body', async () => {
   const route = new Route('POST', '/submit');
   route
     .addPipe(jsonBodyPipe)
@@ -114,98 +114,74 @@ Deno.test('Example mockApi post request with request data', async () => {
       response.body = state.get('body');
     });
 
-  const api = mockApi(route);
+  const result = await testRoute(route)
+    .request('POST', { body: { name: 'super' } });
 
-  const request = mockRequest('POST', '/submit', {
-    name: 'super',
-  });
-  await api.sendByRequest(request);
-
-  assertEquals(api.lastRoute === route, true);
-  assertEquals(api?.lastContext?.response.status, 201);
-  assertEquals(api?.lastContext?.response.body, { name: 'super' });
+  assertEquals(result.ok, true);
+  assertEquals(result.statusCode, 201);
+  assertEquals(result.body, { name: 'super' });
 });
 
-/**
- * example to testing routes by simple response
- */
-
-Deno.test('Route example will be 200 with mocks', async () => {
-  // setup route
-  const route = new Route('GET', '/hello')
-    .addPipe(({ response, request }) => {
-      response.body = {
-        kind: 'test',
-        header: request.headers.get('test-env'),
-      };
-    });
-
-  // setup request objects
-  const url = new URL('/hello', 'http://localhost');
-  const request = mockRequest('GET', url.pathname);
-  const response = mockResponse();
-
-  // add request params like headers
-  request.headers.set('test-env', 'deno test');
-  assertEquals(request.headers.get('test-env'), 'deno test');
-
-  // execute route and use context to check aspectation
-  const context = await route.execute(url, request, response);
-
-  assertEquals(context.response.status, 200);
-  assertEquals(context.response.body, {
-    kind: 'test',
-    header: 'deno test',
-  });
-});
-
-/**
- * example to testing routes on errors
- */
-Deno.test('Route example will throw request error', async () => {
-  // create route
-  const routeError = new Route('GET', '/hello')
-    .addPipe(({ response, request }) => {
-      throw new RequestError('error x', 400);
-    });
-
-  // set request objects
-  const url = new URL('/hello', 'http://localhost');
-  const request = mockRequest('GET', url.pathname);
-  const response = mockResponse();
-
-  assertRejects(
-    () => routeError.execute(url, request, response),
-    RequestError,
-    'error x',
-  );
-});
-/**
- * example by using a api
- */
-Deno.test('Example mockApi route success request', async () => {
-  const route = new Route('POST', '/hello')
+Deno.test('Example testRoute mock pipe to skip auth', async () => {
+  const route = new Route('GET', '/protected');
+  route
     .addPipe(() => {
-      throw new RequestError('api error', 400);
+      throw new AccessDeniedError('forbidden');
+    })
+    .addPipe(({ response }) => {
+      response.body = { data: 'secret' };
     });
 
-  // create api
-  const api = mockApi(route);
+  // Skip the auth pipe (index 0), only test handler
+  const result = await testRoute(route)
+    .mock(0)
+    .request('GET');
 
-  await api.sendByArguments('POST', '/hello');
-
-  // info lastContext have only url request and response props
-  assertEquals(api.lastRoute === route, true);
-  assertEquals(api?.lastContext?.response.status, 400);
+  assertEquals(result.ok, true);
+  assertEquals(result.body, { data: 'secret' });
 });
 
-/**
- * example by using injection services of route
- */
-Deno.test('Example mockApi route to mock injections', async () => {
-  const route = new Route('POST', '/hello')
+Deno.test('Example testRoute mock pipe with replacement', async () => {
+  const route = new Route('GET', '/hello');
+  route
+    .addPipe(({ state }) => {
+      state.set('user', 'real-user');
+    })
+    .addPipe(({ state, response }) => {
+      response.body = { user: state.get('user') };
+    });
+
+  const result = await testRoute(route)
+    .mock(0, ({ state }) => {
+      state.set('user', 'test-user');
+    })
+    .request('GET');
+
+  assertEquals(result.body, { user: 'test-user' });
+});
+
+// --- testApi examples ---
+
+Deno.test('Example testApi route success request', async () => {
+  const route = new Route('POST', '/hello');
+  route.addPipe(() => {
+    throw new RequestError('api error', 400);
+  });
+
+  const api = new Api({ port: 80 });
+  api.addRoute(route);
+
+  const result = await testApi(api).request('POST', { uri: '/hello' });
+
+  assertEquals(result.ok, false);
+  assertEquals(result.statusCode, 400);
+});
+
+Deno.test('Example testApi route to mock injections', async () => {
+  const route = new Route('POST', '/hello');
+  route
     .injections({
-      getConnection(name: string) {
+      getConnection(_name: string) {
         return {
           list() {
             return Promise.resolve(['fake-db']);
@@ -219,84 +195,71 @@ Deno.test('Example mockApi route to mock injections', async () => {
       response.body = items;
     });
 
-  // create api
-  const api = mockApi(route);
+  const api = new Api({ port: 80 });
+  api.addRoute(route);
 
-  /**
-   * not yet mocked, route will use this current implementation
-   */
-  await api.sendByArguments('POST', '/hello');
-  assertEquals(api.lastRoute === route, true);
-  assertEquals(api?.lastContext?.response.body, ['fake-db']);
+  const result1 = await testApi(api).request('POST', { uri: '/hello' });
+  assertEquals(result1.body, ['fake-db']);
 
-  /**
-   * with mock example of route injections
-   */
-  api.mockInjections({
-    getConnection() {
-      return {
-        list() {
-          return Promise.resolve(['mocked']);
-        },
-      };
-    },
-  });
-
-  await api.sendByArguments('POST', '/hello');
-  assertEquals(api.lastRoute === route, true);
-  assertEquals(api?.lastContext?.response.body, ['mocked']);
+  const result2 = await testApi(api)
+    .inject({
+      getConnection() {
+        return {
+          list() {
+            return Promise.resolve(['mocked']);
+          },
+        };
+      },
+    })
+    .request('POST', { uri: '/hello' });
+  assertEquals(result2.body, ['mocked']);
 });
 
-/**
- * example how you can test your custom pipes
- */
+import * as diTestServices from './fixtures/service-x.ts';
+Deno.test('Testing for module injetion in routes', async () => {
+  const route = new Route(EMethod.GET, '/testing/di');
+  route.injections(diTestServices);
+  route.addPipe(({ response, di }) => {
+    response.body = { out: di.serviceX() };
+  });
+
+  const api = new Api({ port: 80 });
+  api.addRoute(route);
+
+  const result = await testApi(api)
+    .inject({ serviceX: () => 'mockedX' })
+    .request(EMethod.GET, { uri: '/testing/di' });
+
+  assertEquals(result.body, { out: 'mockedX' });
+  assertEquals(result.statusCode, 200);
+});
+
+Deno.test('Testing api mocked status code', async () => {
+  const route = new Route(EMethod.GET, '/testing/di');
+  route.addPipe(() => {
+    throw new AccessDeniedError('403 error');
+  });
+
+  const api = new Api({ port: 80 });
+  api.addRoute(route);
+
+  const result = await testApi(api).request(EMethod.GET, { uri: '/testing/di' });
+
+  assertEquals(result.ok, false);
+  assertEquals(result.statusCode, 403);
+});
+
+// --- mockContext for direct pipe testing ---
+
 Deno.test('Example for testing custom pipes', async () => {
   const myPipe = (context: IContext) => {
     context.response.headers.set('custom', 'xxxx');
   };
 
-  const context = mockContext({}); // @see mock-context.ts#ISetting
+  const context = mockContext({});
   assertEquals(context.response.headers.get('custom'), null);
 
   await myPipe(context);
 
   assertEquals(context.response.headers.get('custom'), 'xxxx');
-});
-
-import * as diTestServices from './fixtures/service-x.ts';
-Deno.test('Testing for module injetion in routes', async () => {
-  const routeUrl = '/testing/di';
-  const routeMethod = EMethod.GET;
-
-  const route = new Route(routeMethod, routeUrl);
-  route.injections(diTestServices);
-  route.addPipe(({ response, di }) => response.body = { out: di.serviceX() });
-
-  const api = mockApi(route);
-  api.mockInjections({
-    serviceX: () => 'mockedX',
-  });
-
-  const request = mockRequest(routeMethod, routeUrl);
-  await api.sendByRequest(request);
-
-  assertEquals(api.lastRoute === route, true);
-  assertEquals(api?.lastContext?.response.body, { out: 'mockedX' });
-  assertEquals(api?.lastContext?.response.status, 200);
-});
-
-Deno.test('Testing api mocked status code', async () => {
-  const routeUrl = '/testing/di';
-  const routeMethod = EMethod.GET;
-
-  const route = new Route(routeMethod, routeUrl);
-  route.addPipe(() => {
-    throw new AccessDeniedError('403 error');
-  });
-
-  const api = mockApi(route);
-  await api.sendByArguments(routeMethod, routeUrl);
-
-  assertEquals(api.lastRoute === route, true);
-  assertEquals(api?.lastContext?.response.status, 403);
 });
