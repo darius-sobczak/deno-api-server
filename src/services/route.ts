@@ -16,7 +16,7 @@ export class Route implements IRoute {
   public readonly methods: string[];
   public readonly matcher: IMatcher;
   public readonly props: IStateMap = new Map();
-  protected pipes: Function[] = [];
+  public pipes: IPipe[] = [];
   public di: IInjections = {};
   public parent?: any;
 

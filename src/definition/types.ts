@@ -32,6 +32,7 @@ export interface IRoute {
   matcher: IMatcher;
   di: IInjections;
   parent?: any;
+  readonly pipes: ReadonlyArray<IPipe>;
 
   isMatch(url: URL): boolean;
   addPipe(pipe: IPipe): IRoute;
