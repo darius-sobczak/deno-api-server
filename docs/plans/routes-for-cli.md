@@ -9,3 +9,6 @@ params wil be defined by ?test=a
 
 if the user call the cli it have to show the help with all commands
 it the user call end command alias endpoint it have to siw docs for this endpoints only
+
+it have to be possible to call routes easely in a script or thrirth party cli framework like cliffy
+it have to be possible to call routes by args, like a parser utility to convert to a request 
