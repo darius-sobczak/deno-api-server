@@ -1,0 +1,28 @@
+{
+  "scriptId": "343",
+  "url": "file:///home/darek/work/deno-api-server/src/errors/not-found.error.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 174,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "NotFoundError",
+      "ranges": [
+        {
+          "startOffset": 103,
+          "endOffset": 171,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": false
+    }
+  ]
+}

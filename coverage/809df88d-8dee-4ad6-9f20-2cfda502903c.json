@@ -1,0 +1,28 @@
+{
+  "scriptId": "342",
+  "url": "file:///home/darek/work/deno-api-server/src/deps.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 80,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "serve",
+      "ranges": [
+        {
+          "startOffset": 21,
+          "endOffset": 78,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": false
+    }
+  ]
+}

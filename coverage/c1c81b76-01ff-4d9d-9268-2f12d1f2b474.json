@@ -1,0 +1,39 @@
+{
+  "scriptId": "376",
+  "url": "file:///home/darek/work/deno-api-server/src/definition/events/route.event.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 132,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 50,
+          "endOffset": 55,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "RouteEvent",
+      "ranges": [
+        {
+          "startOffset": 59,
+          "endOffset": 129,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": false
+    }
+  ]
+}

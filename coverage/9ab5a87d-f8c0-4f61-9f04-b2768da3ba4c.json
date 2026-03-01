@@ -1,0 +1,152 @@
+{
+  "scriptId": "335",
+  "url": "file:///home/darek/work/deno-api-server/src/services/route.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 2559,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 185,
+          "endOffset": 259,
+          "count": 4
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "Route",
+      "ranges": [
+        {
+          "startOffset": 308,
+          "endOffset": 1031,
+          "count": 4
+        },
+        {
+          "startOffset": 587,
+          "endOffset": 1027,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 464,
+          "endOffset": 489,
+          "count": 4
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "getMatch",
+      "ranges": [
+        {
+          "startOffset": 684,
+          "endOffset": 973,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "prop",
+      "ranges": [
+        {
+          "startOffset": 1101,
+          "endOffset": 1174,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "inject",
+      "ranges": [
+        {
+          "startOffset": 1248,
+          "endOffset": 1463,
+          "count": 2
+        },
+        {
+          "startOffset": 1330,
+          "endOffset": 1345,
+          "count": 1
+        },
+        {
+          "startOffset": 1347,
+          "endOffset": 1462,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "injections",
+      "ranges": [
+        {
+          "startOffset": 1517,
+          "endOffset": 1572,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "isMatch",
+      "ranges": [
+        {
+          "startOffset": 1601,
+          "endOffset": 1725,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "addPipe",
+      "ranges": [
+        {
+          "startOffset": 1780,
+          "endOffset": 1843,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "execute",
+      "ranges": [
+        {
+          "startOffset": 1961,
+          "endOffset": 2556,
+          "count": 1
+        },
+        {
+          "startOffset": 2404,
+          "endOffset": 2432,
+          "count": 0
+        },
+        {
+          "startOffset": 2468,
+          "endOffset": 2552,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": true
+    }
+  ]
+}

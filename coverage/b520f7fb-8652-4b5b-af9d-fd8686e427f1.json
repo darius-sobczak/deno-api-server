@@ -1,0 +1,17 @@
+{
+  "scriptId": "350",
+  "url": "file:///home/darek/work/deno-api-server/src/services/matcher/mod.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 32,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    }
+  ]
+}

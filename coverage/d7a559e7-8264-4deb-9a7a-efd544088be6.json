@@ -1,0 +1,50 @@
+{
+  "scriptId": "338",
+  "url": "file:///home/darek/work/deno-api-server/example/fixtures/service-x.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 155,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "serviceX",
+      "ranges": [
+        {
+          "startOffset": 7,
+          "endOffset": 44,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "serviceY",
+      "ranges": [
+        {
+          "startOffset": 52,
+          "endOffset": 89,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "serviceDefault",
+      "ranges": [
+        {
+          "startOffset": 105,
+          "endOffset": 154,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": false
+    }
+  ]
+}

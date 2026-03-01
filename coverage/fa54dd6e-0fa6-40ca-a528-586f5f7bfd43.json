@@ -1,0 +1,28 @@
+{
+  "scriptId": "339",
+  "url": "file:///home/darek/work/deno-api-server/src/testing/mock-context.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 789,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "mockContext",
+      "ranges": [
+        {
+          "startOffset": 153,
+          "endOffset": 788,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": false
+    }
+  ]
+}

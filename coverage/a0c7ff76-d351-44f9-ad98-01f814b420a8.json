@@ -1,0 +1,60 @@
+{
+  "scriptId": "385",
+  "url": "file:///home/darek/work/deno-api-server/src/services/matcher/uri-match.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 244,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 26,
+          "endOffset": 29,
+          "count": 2
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "UriMatch",
+      "ranges": [
+        {
+          "startOffset": 33,
+          "endOffset": 74,
+          "count": 2
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "getMatch",
+      "ranges": [
+        {
+          "startOffset": 77,
+          "endOffset": 241,
+          "count": 3
+        },
+        {
+          "startOffset": 127,
+          "endOffset": 220,
+          "count": 2
+        },
+        {
+          "startOffset": 220,
+          "endOffset": 240,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    }
+  ]
+}

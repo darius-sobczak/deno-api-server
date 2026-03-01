@@ -27,3 +27,7 @@ export {
   NotFoundError,
   RequestError,
 } from './src/errors/mod.ts';
+
+/** cli **/
+export { CliApi, parseCliArgs, runCli } from './src/cli/mod.ts';
+export type { ICliRequest, ICliResult } from './src/cli/mod.ts';

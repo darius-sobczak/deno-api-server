@@ -1,0 +1,28 @@
+{
+  "scriptId": "388",
+  "url": "file:///home/darek/work/deno-api-server/src/errors/bad-request.error.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 209,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "BadRequestError",
+      "ranges": [
+        {
+          "startOffset": 105,
+          "endOffset": 206,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": false
+    }
+  ]
+}

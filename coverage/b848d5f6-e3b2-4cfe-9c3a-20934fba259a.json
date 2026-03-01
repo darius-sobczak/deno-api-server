@@ -1,0 +1,147 @@
+{
+  "scriptId": "354",
+  "url": "file:///home/darek/work/deno-api-server/src/testing/test-api.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 3030,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 423,
+          "endOffset": 446,
+          "count": 5
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "TestApi",
+      "ranges": [
+        {
+          "startOffset": 450,
+          "endOffset": 491,
+          "count": 5
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "inject",
+      "ranges": [
+        {
+          "startOffset": 549,
+          "endOffset": 653,
+          "count": 2
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "request",
+      "ranges": [
+        {
+          "startOffset": 656,
+          "endOffset": 2967,
+          "count": 5
+        },
+        {
+          "startOffset": 718,
+          "endOffset": 724,
+          "count": 0
+        },
+        {
+          "startOffset": 926,
+          "endOffset": 1049,
+          "count": 0
+        },
+        {
+          "startOffset": 1103,
+          "endOffset": 1322,
+          "count": 0
+        },
+        {
+          "startOffset": 1638,
+          "endOffset": 1741,
+          "count": 2
+        },
+        {
+          "startOffset": 1871,
+          "endOffset": 1907,
+          "count": 3
+        },
+        {
+          "startOffset": 1907,
+          "endOffset": 2037,
+          "count": 0
+        },
+        {
+          "startOffset": 2044,
+          "endOffset": 2433,
+          "count": 2
+        },
+        {
+          "startOffset": 2093,
+          "endOffset": 2115,
+          "count": 0
+        },
+        {
+          "startOffset": 2199,
+          "endOffset": 2245,
+          "count": 0
+        },
+        {
+          "startOffset": 2292,
+          "endOffset": 2314,
+          "count": 0
+        },
+        {
+          "startOffset": 2452,
+          "endOffset": 2701,
+          "count": 2
+        },
+        {
+          "startOffset": 2493,
+          "endOffset": 2504,
+          "count": 0
+        },
+        {
+          "startOffset": 2528,
+          "endOffset": 2533,
+          "count": 0
+        },
+        {
+          "startOffset": 2732,
+          "endOffset": 2757,
+          "count": 3
+        },
+        {
+          "startOffset": 2758,
+          "endOffset": 2782,
+          "count": 3
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "testApi",
+      "ranges": [
+        {
+          "startOffset": 2977,
+          "endOffset": 3029,
+          "count": 5
+        }
+      ],
+      "isBlockCoverage": true
+    }
+  ]
+}

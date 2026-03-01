@@ -1,0 +1,122 @@
+{
+  "scriptId": "337",
+  "url": "file:///home/darek/work/deno-api-server/plugins/swagger/plugin.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 2737,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "getUri",
+      "ranges": [
+        {
+          "startOffset": 196,
+          "endOffset": 275,
+          "count": 13
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "plugin",
+      "ranges": [
+        {
+          "startOffset": 291,
+          "endOffset": 2736,
+          "count": 6
+        },
+        {
+          "startOffset": 582,
+          "endOffset": 611,
+          "count": 0
+        },
+        {
+          "startOffset": 643,
+          "endOffset": 709,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 779,
+          "endOffset": 2697,
+          "count": 6
+        },
+        {
+          "startOffset": 2505,
+          "endOffset": 2544,
+          "count": 5
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 904,
+          "endOffset": 2437,
+          "count": 13
+        },
+        {
+          "startOffset": 996,
+          "endOffset": 1008,
+          "count": 1
+        },
+        {
+          "startOffset": 1009,
+          "endOffset": 1013,
+          "count": 12
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 1110,
+          "endOffset": 2371,
+          "count": 13
+        },
+        {
+          "startOffset": 1461,
+          "endOffset": 2298,
+          "count": 2
+        },
+        {
+          "startOffset": 1619,
+          "endOffset": 1778,
+          "count": 1
+        },
+        {
+          "startOffset": 1816,
+          "endOffset": 1870,
+          "count": 1
+        },
+        {
+          "startOffset": 1949,
+          "endOffset": 2112,
+          "count": 1
+        },
+        {
+          "startOffset": 2185,
+          "endOffset": 2286,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": true
+    }
+  ]
+}

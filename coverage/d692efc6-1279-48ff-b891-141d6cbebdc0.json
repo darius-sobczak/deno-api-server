@@ -1,0 +1,141 @@
+{
+  "scriptId": "336",
+  "url": "file:///home/darek/work/deno-api-server/src/presets/pipes/process/file.pipe.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 2774,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "mediaTypeByExt",
+      "ranges": [
+        {
+          "startOffset": 926,
+          "endOffset": 985,
+          "count": 2
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "mediaTypeByPath",
+      "ranges": [
+        {
+          "startOffset": 1081,
+          "endOffset": 1152,
+          "count": 3
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "filePipe",
+      "ranges": [
+        {
+          "startOffset": 1168,
+          "endOffset": 2773,
+          "count": 3
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 1221,
+          "endOffset": 2770,
+          "count": 3
+        },
+        {
+          "startOffset": 1432,
+          "endOffset": 1651,
+          "count": 2
+        },
+        {
+          "startOffset": 1651,
+          "endOffset": 1672,
+          "count": 0
+        },
+        {
+          "startOffset": 1673,
+          "endOffset": 1700,
+          "count": 2
+        },
+        {
+          "startOffset": 1725,
+          "endOffset": 1856,
+          "count": 2
+        },
+        {
+          "startOffset": 1856,
+          "endOffset": 2275,
+          "count": 1
+        },
+        {
+          "startOffset": 1984,
+          "endOffset": 2023,
+          "count": 0
+        },
+        {
+          "startOffset": 2129,
+          "endOffset": 2207,
+          "count": 0
+        },
+        {
+          "startOffset": 2275,
+          "endOffset": 2339,
+          "count": 2
+        },
+        {
+          "startOffset": 2339,
+          "endOffset": 2343,
+          "count": 1
+        },
+        {
+          "startOffset": 2349,
+          "endOffset": 2384,
+          "count": 1
+        },
+        {
+          "startOffset": 2386,
+          "endOffset": 2441,
+          "count": 1
+        },
+        {
+          "startOffset": 2448,
+          "endOffset": 2681,
+          "count": 1
+        },
+        {
+          "startOffset": 2555,
+          "endOffset": 2616,
+          "count": 0
+        },
+        {
+          "startOffset": 2617,
+          "endOffset": 2634,
+          "count": 0
+        },
+        {
+          "startOffset": 2681,
+          "endOffset": 2735,
+          "count": 2
+        },
+        {
+          "startOffset": 2735,
+          "endOffset": 2766,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    }
+  ]
+}

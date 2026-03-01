@@ -1,0 +1,39 @@
+{
+  "scriptId": "373",
+  "url": "file:///home/darek/work/deno-api-server/src/errors/request.error.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 190,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 44,
+          "endOffset": 61,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "RequestError",
+      "ranges": [
+        {
+          "startOffset": 65,
+          "endOffset": 187,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": false
+    }
+  ]
+}

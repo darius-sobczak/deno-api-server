@@ -1,0 +1,83 @@
+{
+  "scriptId": "356",
+  "url": "file:///home/darek/work/deno-api-server/src/testing/test-route.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 3051,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 186,
+          "endOffset": 232,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "TestRoute",
+      "ranges": [
+        {
+          "startOffset": 236,
+          "endOffset": 283,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "mock",
+      "ranges": [
+        {
+          "startOffset": 426,
+          "endOffset": 511,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "inject",
+      "ranges": [
+        {
+          "startOffset": 567,
+          "endOffset": 671,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "request",
+      "ranges": [
+        {
+          "startOffset": 674,
+          "endOffset": 2980,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "testRoute",
+      "ranges": [
+        {
+          "startOffset": 2990,
+          "endOffset": 3050,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": false
+    }
+  ]
+}

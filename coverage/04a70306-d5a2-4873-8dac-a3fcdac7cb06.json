@@ -1,0 +1,69 @@
+{
+  "scriptId": "337",
+  "url": "file:///home/darek/work/deno-api-server/plugins/access-log/plugin.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1155,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "plugin",
+      "ranges": [
+        {
+          "startOffset": 153,
+          "endOffset": 1154,
+          "count": 2
+        },
+        {
+          "startOffset": 244,
+          "endOffset": 279,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 322,
+          "endOffset": 1150,
+          "count": 3
+        },
+        {
+          "startOffset": 502,
+          "endOffset": 583,
+          "count": 0
+        },
+        {
+          "startOffset": 617,
+          "endOffset": 781,
+          "count": 0
+        },
+        {
+          "startOffset": 871,
+          "endOffset": 885,
+          "count": 1
+        },
+        {
+          "startOffset": 886,
+          "endOffset": 896,
+          "count": 2
+        },
+        {
+          "startOffset": 938,
+          "endOffset": 991,
+          "count": 2
+        }
+      ],
+      "isBlockCoverage": true
+    }
+  ]
+}

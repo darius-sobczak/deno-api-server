@@ -1,0 +1,72 @@
+{
+  "scriptId": "346",
+  "url": "file:///home/darek/work/deno-api-server/src/testing/test-api.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 3030,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 423,
+          "endOffset": 446,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "TestApi",
+      "ranges": [
+        {
+          "startOffset": 450,
+          "endOffset": 491,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "inject",
+      "ranges": [
+        {
+          "startOffset": 549,
+          "endOffset": 653,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "request",
+      "ranges": [
+        {
+          "startOffset": 656,
+          "endOffset": 2967,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "testApi",
+      "ranges": [
+        {
+          "startOffset": 2977,
+          "endOffset": 3029,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": false
+    }
+  ]
+}

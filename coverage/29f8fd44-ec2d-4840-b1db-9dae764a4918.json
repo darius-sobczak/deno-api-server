@@ -1,0 +1,28 @@
+{
+  "scriptId": "333",
+  "url": "file:///home/darek/work/deno-api-server/plugins/healthcheck/plugin.test.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 467,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 207,
+          "endOffset": 464,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    }
+  ]
+}

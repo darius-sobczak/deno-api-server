@@ -1,4 +1,4 @@
-[OPEN] routes for cli
+[DONE] routes for cli
 
 routes and current pi construct have to be possible tto use as cli tool
 if the route need some body data it  have to be possible to call it by cli

@@ -1,0 +1,60 @@
+{
+  "scriptId": "336",
+  "url": "file:///home/darek/work/deno-api-server/plugins/status/plugin.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 754,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "createStatusRoute",
+      "ranges": [
+        {
+          "startOffset": 139,
+          "endOffset": 475,
+          "count": 1
+        },
+        {
+          "startOffset": 232,
+          "endOffset": 244,
+          "count": 0
+        },
+        {
+          "startOffset": 292,
+          "endOffset": 332,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 358,
+          "endOffset": 451,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "plugin",
+      "ranges": [
+        {
+          "startOffset": 523,
+          "endOffset": 753,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    }
+  ]
+}

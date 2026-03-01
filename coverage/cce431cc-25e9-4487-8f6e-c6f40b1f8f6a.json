@@ -1,0 +1,140 @@
+{
+  "scriptId": "350",
+  "url": "file:///home/darek/work/deno-api-server/src/services/api.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 4052,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 387,
+          "endOffset": 463,
+          "count": 6
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "Api",
+      "ranges": [
+        {
+          "startOffset": 467,
+          "endOffset": 535,
+          "count": 6
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "get host",
+      "ranges": [
+        {
+          "startOffset": 538,
+          "endOffset": 772,
+          "count": 6
+        },
+        {
+          "startOffset": 655,
+          "endOffset": 660,
+          "count": 0
+        },
+        {
+          "startOffset": 704,
+          "endOffset": 713,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "addRoute",
+      "ranges": [
+        {
+          "startOffset": 834,
+          "endOffset": 990,
+          "count": 13
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "getUrlByRequest",
+      "ranges": [
+        {
+          "startOffset": 993,
+          "endOffset": 1067,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "getRouteByRequest",
+      "ranges": [
+        {
+          "startOffset": 1162,
+          "endOffset": 1434,
+          "count": 6
+        },
+        {
+          "startOffset": 1210,
+          "endOffset": 1242,
+          "count": 0
+        },
+        {
+          "startOffset": 1278,
+          "endOffset": 1413,
+          "count": 13
+        },
+        {
+          "startOffset": 1330,
+          "endOffset": 1407,
+          "count": 11
+        },
+        {
+          "startOffset": 1364,
+          "endOffset": 1399,
+          "count": 6
+        },
+        {
+          "startOffset": 1413,
+          "endOffset": 1433,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "listen",
+      "ranges": [
+        {
+          "startOffset": 1485,
+          "endOffset": 3542,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "handleError",
+      "ranges": [
+        {
+          "startOffset": 3545,
+          "endOffset": 4049,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": false
+    }
+  ]
+}

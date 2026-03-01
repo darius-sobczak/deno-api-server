@@ -1,0 +1,39 @@
+{
+  "scriptId": "384",
+  "url": "file:///home/darek/work/deno-api-server/src/definition/events/error.event.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 181,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 50,
+          "endOffset": 65,
+          "count": 2
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "ErrorEvent",
+      "ranges": [
+        {
+          "startOffset": 69,
+          "endOffset": 178,
+          "count": 2
+        }
+      ],
+      "isBlockCoverage": true
+    }
+  ]
+}

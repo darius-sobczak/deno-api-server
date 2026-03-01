@@ -1,0 +1,17 @@
+{
+  "scriptId": "336",
+  "url": "file:///home/darek/work/deno-api-server/dev_mod.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 366,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    }
+  ]
+}

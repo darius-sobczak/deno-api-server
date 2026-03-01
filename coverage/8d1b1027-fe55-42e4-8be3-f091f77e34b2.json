@@ -1,0 +1,28 @@
+{
+  "scriptId": "342",
+  "url": "file:///home/darek/work/deno-api-server/src/testing/mock-fn.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 741,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "mockFn",
+      "ranges": [
+        {
+          "startOffset": 39,
+          "endOffset": 740,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": false
+    }
+  ]
+}

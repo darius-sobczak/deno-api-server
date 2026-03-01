@@ -1,0 +1,88 @@
+{
+  "scriptId": "352",
+  "url": "file:///home/darek/work/deno-api-server/src/testing/mock-fn.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 741,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "mockFn",
+      "ranges": [
+        {
+          "startOffset": 39,
+          "endOffset": 740,
+          "count": 3
+        },
+        {
+          "startOffset": 412,
+          "endOffset": 488,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "implementation",
+      "ranges": [
+        {
+          "startOffset": 72,
+          "endOffset": 78,
+          "count": 5
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "clear",
+      "ranges": [
+        {
+          "startOffset": 128,
+          "endOffset": 223,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "implement",
+      "ranges": [
+        {
+          "startOffset": 229,
+          "endOffset": 300,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "mock.calls.at",
+      "ranges": [
+        {
+          "startOffset": 434,
+          "endOffset": 483,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": false
+    },
+    {
+      "functionName": "fn",
+      "ranges": [
+        {
+          "startOffset": 506,
+          "endOffset": 707,
+          "count": 5
+        }
+      ],
+      "isBlockCoverage": true
+    }
+  ]
+}

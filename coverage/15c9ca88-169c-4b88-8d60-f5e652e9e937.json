@@ -1,0 +1,28 @@
+{
+  "scriptId": "333",
+  "url": "file:///home/darek/work/deno-api-server/src/services/matcher/uri-match.test.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 440,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 181,
+          "endOffset": 437,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    }
+  ]
+}

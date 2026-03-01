@@ -1,0 +1,39 @@
+{
+  "scriptId": "384",
+  "url": "file:///home/darek/work/deno-api-server/src/services/raw.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 112,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 57,
+          "endOffset": 61,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "Raw",
+      "ranges": [
+        {
+          "startOffset": 65,
+          "endOffset": 109,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": false
+    }
+  ]
+}

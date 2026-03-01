@@ -1,0 +1,28 @@
+{
+  "scriptId": "339",
+  "url": "file:///home/darek/work/deno-api-server/src/testing/mock-request.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 650,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "mockRequest",
+      "ranges": [
+        {
+          "startOffset": 59,
+          "endOffset": 649,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": false
+    }
+  ]
+}

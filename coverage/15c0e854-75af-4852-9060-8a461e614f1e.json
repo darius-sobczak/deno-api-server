@@ -1,0 +1,50 @@
+{
+  "scriptId": "334",
+  "url": "file:///home/darek/work/deno-api-server/src/dev_deps.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 801,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "assertCalledCount",
+      "ranges": [
+        {
+          "startOffset": 124,
+          "endOffset": 222,
+          "count": 2
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "assertCalledWith",
+      "ranges": [
+        {
+          "startOffset": 272,
+          "endOffset": 493,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "assertCalledWithAt",
+      "ranges": [
+        {
+          "startOffset": 551,
+          "endOffset": 800,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    }
+  ]
+}

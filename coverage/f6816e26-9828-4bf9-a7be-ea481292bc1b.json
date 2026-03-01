@@ -1,0 +1,33 @@
+{
+  "scriptId": "340",
+  "url": "file:///home/darek/work/deno-api-server/src/presets/pipes/body/json-body.pipe.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 423,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "jsonBodyPipe",
+      "ranges": [
+        {
+          "startOffset": 219,
+          "endOffset": 422,
+          "count": 1
+        },
+        {
+          "startOffset": 361,
+          "endOffset": 420,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": true
+    }
+  ]
+}

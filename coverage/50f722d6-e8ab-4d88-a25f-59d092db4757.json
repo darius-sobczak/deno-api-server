@@ -1,0 +1,28 @@
+{
+  "scriptId": "386",
+  "url": "file:///home/darek/work/deno-api-server/src/errors/access-denied.error.ts",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 213,
+          "count": 1
+        }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "AccessDeniedError",
+      "ranges": [
+        {
+          "startOffset": 107,
+          "endOffset": 210,
+          "count": 0
+        }
+      ],
+      "isBlockCoverage": false
+    }
+  ]
+}
