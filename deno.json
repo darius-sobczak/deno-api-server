@@ -17,9 +17,8 @@
     "useUnknownInCatchVariables": true
   },
   "imports": {
-    "@std/assert": "https://deno.land/std@0.224.0/testing/asserts.ts",
-    "@std/http": "https://deno.land/std@0.224.0/http/server.ts",
-    "@std/path": "https://deno.land/std@0.224.0/path/mod.ts"
+    "@std/assert": "jsr:@std/assert",
+    "@std/path": "jsr:@std/path"
   },
   "lint": {
     "include": ["src/", "plugins/", "example/", "mod.ts"],
