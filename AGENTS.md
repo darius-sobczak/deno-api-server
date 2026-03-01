@@ -168,4 +168,4 @@ Deno.test("Test description", async () => {
 - Project README: ./README.md
 - Release Notes: ./RELEASE_NOTES.md
 
-When the user requests anything to plan or implement something read and follow `docs/rules/planed.md`
+When the user requests anything to plan or implement something read and follow `docs/rules/planed.md` (rules V0006)

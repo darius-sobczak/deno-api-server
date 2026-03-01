@@ -20,10 +20,11 @@ Plans are stored in `docs/plans/*.md`. Each file starts with a status header on 
 
 - When you start working on a plan: update status `[OPEN]` → `[PROGRESS]`
 - When implementation is complete: update status `[PROGRESS]` → `[TEST]`
-- When all tests pass: update status `[TEST]` → `[DONE]`
+- Keep the plan in `[TEST]` for user feedback after implementation
+- Only when the user explicitly says "finish it" (or equivalent), move `[TEST]` → `[DONE]`
 - For every implementation task, run verification with `go test ./...` (or `make test`) before marking a plan as `[DONE]`
-- When an agent finishes implementation and verification, it must set the plan to `[DONE]` and add this as line 2:
-  `Implemented: [YYYY-MM-DD] by [AGENTNAME]`
+- Before commit on "finish it", ensure the plan is already updated from `[TEST]` to `[DONE]`
+- Commit messages on "finish it" should describe the latest updates
 - Always rewrite the **first line** of the plan file when changing status — never add a second header
 - If the user asks about plans, list the files in `docs/plans/` and their current status
 
@@ -32,9 +33,9 @@ Plans are stored in `docs/plans/*.md`. Each file starts with a status header on 
 1. Read the relevant plan from `docs/plans/` before starting
 2. Update the first line to `[PROGRESS] <title>` when you begin
 3. Follow the plan steps
-4. Update the first line to `[TEST] <title>` when done implementing
-5. After verification, update to `[DONE] <title>` and set line 2 to:
-   `Implemented: [YYYY-MM-DD] by [AGENTNAME]`
+4. Update the first line to `[TEST] <title>` when done implementing and request user feedback
+5. Wait for the user's response while keeping the plan in `[TEST]`
+6. If the user says "finish it" (or equivalent), update to `[DONE] <title>` before committing
 
 ## "Implement next plan" command
 
@@ -43,6 +44,7 @@ When the user says something like:
 - "work on next plan"
 - "start next plan"
 - "what's the next plan"
+- `cap` (shorthand for "commit and implement next plan" — first commit any pending changes, then implement the next plan)
 
 Do the following:
 
@@ -52,30 +54,32 @@ Do the following:
 4. Read the full plan content to understand the goal and steps
 5. Update its first line to `[PROGRESS] <title>` before starting any code changes
 6. Implement the plan
-7. Update to `[TEST] <title>` when done, then verify
-8. Update to `[DONE] <title>` once everything passes
+7. Update to `[TEST] <title>` when done, then verify and ask for feedback
+8. Only if the user says "finish it", update to `[DONE] <title>` and commit
 
 If no `[OPEN]` plan exists, tell the user and list current plan statuses.
 
-## Agent WIP lock
+## Agent lock file
 
-When an agent begins implementing a plan (status → `[PROGRESS]`), it **must** append a WIP tag to the title on the first line:
+When an agent begins implementing a plan (status → `[PROGRESS]`), it **must** create a lock file next to the plan:
 
+`docs/plans/<plan-name>.md.lock`
+
+The lock file must contain metadata in JSON, for example:
+
+```json
+{
+  "agent": "<AGENTNAME>",
+  "createdAt": "YYYY-MM-DD",
+  "tool": "codex",
+  "note": "working on implementation"
+}
 ```
-[PROGRESS] My Plan Title (WIP by <AGENTNAME>)
-```
 
-- `<AGENTNAME>` is the agent's name or model identifier (e.g. `Claude`, `GPT-4o`)
-- The tag must be at the **end** of the title, separated by a space
-- This signals to the editor that the file is agent-locked — the user should not edit it directly while the agent is working
-
-When the agent marks the plan as `[DONE]`, it **must** remove the WIP tag from the title to unlock the file:
-
-```
-[DONE] My Plan Title
-```
-
-Failing to remove the tag leaves the plan locked in the editor even after completion.
+- `<AGENTNAME>` is the agent's name or model identifier (e.g. `Claude`, `Codex`)
+- Keep the plan title clean (no `(WIP by ...)` suffix)
+- While the `.md.lock` file exists, the plan is locked and must not be changed through the app
+- When the agent finishes the plan, it **must remove** `docs/plans/<plan-name>.md.lock` to unlock it
 
 ## Agent plan mode
 
