@@ -13,6 +13,7 @@ export default async function jsonBodyPipe({ state, request }: IContext) {
     state.set('bodyType', 'json');
     state.set('body', await request.json());
   } catch (e) {
-    throw new RequestError(e.message, 400);
+    const message = e instanceof Error ? e.message : 'Invalid JSON body';
+    throw new RequestError(message, 400);
   }
 }
